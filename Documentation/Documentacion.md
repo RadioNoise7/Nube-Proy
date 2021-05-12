@@ -78,7 +78,9 @@ A continuación, la estructura de la base de datos del sistema queda de la sigui
 
 **Entidades*
 
-Descripcion de las entidades del sistema
+Las entidades del sistema son los siguientes:
+
+*     Controller. Controladores que reciben y procesan las solicitudes del usuario.
 
 **Diagrama entidad relación**
 
