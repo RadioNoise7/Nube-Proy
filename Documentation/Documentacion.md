@@ -82,9 +82,9 @@ En esta sección se cita la documentación de la API
 
 ## Documentación Individual de cada Endpoint por cada entidad ##
 
-###*URL (URI)*
+###*URL (URI)*###
 
-####Usuario
+####Usuario####
 *   GET/usuarios 
 *   GET/usuarios/{idUsuario} 
 *   POST/usuarios 
@@ -92,118 +92,118 @@ En esta sección se cita la documentación de la API
 *   DELETE/usuarios/{idUsuario}    
 
 
-####Proveedores de video
+####Proveedores de video####
 *   GET/proveedores
 *   GET/proveedores/{idProveedor} 
 *   POST/proveedores
 *   PUT/proveedores/{idProveedor} 
 *   DELETE/proveedores/{idProveedor} 
 
-####Comentarios
+####Comentarios####
 *   GET/comentarios
 *   GET/comentarios/{idComentario} 
 *   POST/comentarios
 *   PUT/comentarios/{idComentario} 
 *   DELETE/comentarios/{idComentario} 
 
-####Interacciones
+####Interacciones####
 *   GET/interacciones
 *   GET/interacciones/{idInteraccion} 
 *   POST/interacciones
 *   PUT/interacciones/{idInteraccion} 
 *   DELETE/interacciones/{idInteraccion}
 
-####Videos
+####Videos####
 *   GET/videos
 *   GET/videos/{idVideo} 
 *   POST/videos
 *   DELETE/videos/{idVideo} 
 
 
-###*Descripción*
-####Usuario
+###*Descripción*###
+####Usuario####
 Entidad que representa a los usuarios que interactúan con el sistema y hacen uso de este, interacciones tales como: ver videos, dar like o dislike y comentar, o a al administrador del sistema, quien se encarga de administrar videos, usuarios y proveedores, esto dependerá del rol.
 
-####Proveedores de video
+####Proveedores de video####
 Entidad que representa a los proveedores de algunos videos.
 
-####Comentarios
+####Comentarios####
 Entidad que representa a los comentarios que los usuarios pueden realizar en los videos.
 
-####Interacciones
+####Interacciones####
 Entidad que representa los likes o dislikes que los usuarios pueden dejar en los videos.
 
-####Videos
+####Videos####
 Entidad que representa los videos que los usuarios pueden ver en el sitio.
 
-###*Campos requeridos*
-####Usuario
+###*Campos requeridos*###
+####Usuario####
 idUsuario    
 nombre    
 apellido    
 correo    
 rol    
 
-####Proveedores de video
+####Proveedores de video####
 
-####Comentarios
+####Comentarios####
 idComentario    
 idUsuario     
 idVideo     
 contenido   
 
-####Interacciones
+####Interacciones####
 idInteraccion     
 idUsuario     
 idVideo     
 Tipo(like o dislike)
 
-####Videos
+####Videos####
 idVideo    
 video    
 
-###*Validaciones*
-####Usuario
+###*Validaciones*###
+####Usuario####
 idUsuario --- Que no exista otro usuario conel mismo idUsuario (POST)    
 correo --- Que cumpla con el formato de correo  
-####Comentarios
+####Comentarios####
 contenido --- Que el campo no este vacio
-####Interacciones
+####Interacciones####
 idUsuario | idVideo --- El usuario solo puede reaccionar una vez a un video, por tanto solo puede haber una interacción por cada 
 combinación idVideo e idUsuario.   
-####Videos
+####Videos####
 video --- Formato valido
 
 
-###*Tipo de dato de cada campo*
+###*Tipo de dato de cada campo*###
 
-####Usuario
+####Usuario####
 idUsuario---[Integer]     
 nombre------[String]    
 apellido----[String]      
 correo------[String]    
 rol---------[String]    
 
-####Proveedores de video
+####Proveedores de video####
 
-####Comentarios
+####Comentarios####
 idComentario---[Integer]    
 idUsuario------[Integer]     
 idVideo--------[Integer]     
 contenido------[String]   
 
-####Interacciones
+####Interacciones####
 idInteraccion---[Integer]      
 idUsuario-------[Integer]      
 idVideo---------[Integer]      
 Tipo------------[boolean]
 
-####Videos
+####Videos####
 idVideo----[Integer]    
 video------[File]   
 
 
-###*Respuesta (Response)*
+###*Respuesta (Response)*###
 
 
 
