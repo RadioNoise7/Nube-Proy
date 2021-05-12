@@ -95,6 +95,9 @@ Las entidades del sistema son los siguientes:
 
 *     Comentarios. Entidad que sirve para administrar los comentarios que se realizan a los videos subidos por el usuario.
       Se debe poder visualizar la fecha y el autor del video.
+      
+*     Interracciones. Entidad que sirve para administrar las interraciones que el usuario tiene con los videos, el usuario puede
+      darle like o dislike algún otro video en el sistema.
 
 *     Vídeos. Entidad que sirve para administrar los videos subidos al sistema por el usuario.
 
@@ -301,6 +304,8 @@ video------[File]
 ## Criterios de calidad ##
 
 La API deberá cumplir con las siguientes características que aseguran la confiabilidad y disponibilidad del mismo.
+
+En esta sección se describen los criterios de calidad que son correspondientes a la arquitectura. Se indican cada uno de los criterios junto con una descripción clara y precisa. Los requerimientos de calidad a alcanzar por la arquitectura son los siguientes:
 
 *Los fallos ocurridos en la API deben ser transparentes para el usuario.
 *La API deberá ser tolerante a fallos y ser capaz de recuperarse de los mismos.
