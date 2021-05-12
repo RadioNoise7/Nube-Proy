@@ -12,6 +12,10 @@
 
 ## Propósito ##
 
+Este documento tiene como objetivo proporcionar una descripción general del sistema, así como mantener organizada la arquitectura técnica,   
+esto a través de una serie de vistas arquitectónicas que representan los distintos aspectos del sistema. Con ellas se pretende capturar y   
+transmitir las decisiones arquitectónicas del sistema para proveer una fuente de referencia a los analistas y a los diseñadores de la aplicación.
+
 ## Alcance ##
 
 ## Documentos de referencia ##
