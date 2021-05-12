@@ -81,10 +81,10 @@ A continuación, la estructura de la base de datos del sistema queda de la sigui
 Las entidades del sistema son los siguientes:
 
 *     Usuario. Entidad encargada de administrar a los usuarios del sistema.
-      *El usuario podra tener permiso a las funcionalidades principales del sistema.
+      El usuario podra tener permiso a las funcionalidades principales del sistema.
 
 *     Tipo de Usuario. Entidad que sirve para poder designar permisos y roles de los usuarios del sistema.
-      *Dependiendo del tipo de usuario será los permisos que tenga el usuario sobre el sistema.
+      Dependiendo del tipo de usuario será los permisos que tenga el usuario sobre el sistema.
 
 *     Cuenta. Entidad que sirve para administrar la cuenta de las plataformas que tenga el usuario.
 *     El usuario puede tener diferentes cuentas en diferentes plataformas.
