@@ -327,7 +327,7 @@ Capacidad de la API para prevenir accesos o modificaciones no autorizados a dato
 La información proporcionada al usuario deberá ser íntegra y completa, (es decir la información deberá llegar completa al usuario y sin ninguna modificación).
 Las información sensible del usuario, como datos de inicio de sesión (en caso de requerirse) deberá ser resguardada y tratada con un algoritmo de encriptación
 
-**Funcionalidad
+**Funcionalidad**
 
 La API deberá finalizar toda transacción u operación realizada dentro del aplicativo, es decir, no deberá quedar pausada la funcionalidad de la aplicación si la API llegara a fallar.
 El 85% de las transacciones realizadas deberán ser completadas con éxito.
