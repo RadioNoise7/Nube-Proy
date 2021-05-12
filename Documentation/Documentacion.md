@@ -32,7 +32,9 @@ A continuación se listan los documentos de referencias utilizados para el proye
 
 ## Arquitectura ##
 
-*Descripción de la arquitectura utilizada (Capas) (Describir responsabilidad de las capas)*
+**Descripción de la arquitectura utilizada (Capas) (Describir responsabilidad de las capas)**
+
+![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/capas_arquitectura.png)
 
 **Capa de Presentación**    
  Aquí agrupamos las clases y métodos que conforman el API del servicio web, tales como GET, POST, PUT, DELETE, etc.
