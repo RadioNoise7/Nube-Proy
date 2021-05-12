@@ -79,7 +79,7 @@ Descripcion de las entidades del sistema
 **Diagrama entidad relación**
 A continuación se presenta el diagrama de Entidad-Relación del sistema:
 
-![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/Diagrama E-R.jpg)
+![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagrama_er.jpg)
 
 ## Documentación de la API ##
 
