@@ -315,6 +315,46 @@ Métodos POST para la creación de las entidades del sistema:
         “password”: "dasdjnasduoasndmasi",
         “correo”: “mariel_castañeda@gmail.com”
       }
+      
+#### Proveedor
+*     {
+        “idUsuario”: 1,
+        “nombreProveedor”: “Dailymotion”, 
+        “urlProveedor”: “https://www.dailymotion.com/signin?urlback=%2Fmx”
+      }
+      
+#### Video
+*     {
+        “idVideo”: 1,
+        “idCuenta”: 11, 
+        “idProveedor”: 1, 
+        “nombreVideo”: "Principales maravillas de Yucatán"
+      }
+      
+#### Cuenta
+*     {
+        “idCuenta”: 11,
+        “idProveedor”: 1, 
+        “correo”: “mariel_castañeda@gmail.com”, 
+        “password”: "dasdjnasduoasndmasi"
+      }
+      
+#### Comentario
+*     {
+        “idComentario”: 10,
+        “idVideo”: 1, 
+        “idCuenta”: 1, 
+        “comentario”: "Bonito video",
+        “fechaComentario”: “10-05-2021”
+      }
+      
+#### Interración
+*     {
+        “idComentario”: 10,
+        “idVideo”: 1, 
+        “idCuenta”: 1, 
+        “tipo”: “true”
+      }
 
 ## Criterios de calidad ##
 
