@@ -303,15 +303,31 @@ video------[File]
 
 ## Criterios de calidad ##
 
-La API deberá cumplir con las siguientes características que aseguran la confiabilidad y disponibilidad del mismo.
+En esta sección se describen los criterios de calidad que son correspondientes a la arquitectura. Se indican cada uno de los criterios junto con una descripción clara y precisa.
+Los criterios de calidad a alcanzar por la arquitectura son los siguientes:
 
-En esta sección se describen los criterios de calidad que son correspondientes a la arquitectura. Se indican cada uno de los criterios junto con una descripción clara y precisa. Los requerimientos de calidad a alcanzar por la arquitectura son los siguientes:
+**Disponibilidad**
 
-*Los fallos ocurridos en la API deben ser transparentes para el usuario.
-*La API deberá ser tolerante a fallos y ser capaz de recuperarse de los mismos.
-*La API deberá estar disponible para el usuario en todo momento.
-*La 80% de las transacciones realizadas deberán ser completadas con éxito.
-*La información proporcionada al usuario deberá ser íntegra y completa, (es decir la información deberá llegar completa al usuario y sin ninguna modificación).
-*La API deberá finalizar toda transacción u operación realizada dentro del aplicativo, es decir, no deberá quedar pausada la funcionalidad de la aplicación si la API llegara a fallar
-*Las información sensible del usuario, como datos de inicio de sesión (en caso de requerirse) deberá ser resguardada y tratada con un algoritmo de encriptación
+Capacidad del sistema de estar operativo y accesible para su uso cuando se requiere.
 
+**Usabilidad**
+
+Capacidad el sistema que permite al usuario entender adecuadamente sus funcionalidades principales para cubrir las necesidades del cliente.
+
+**Tolerancia a fallos**
+
+La API deberá ser tolerante a fallos y ser capaz de seguir operando según lo previsto en presencia de fallas de hardware/software.
+
+**Integridad**
+
+Capacidad de la API para prevenir accesos o modificaciones no autorizados a datos o funciones del sistema.
+
+**Seguridad**
+
+La información proporcionada al usuario deberá ser íntegra y completa, (es decir la información deberá llegar completa al usuario y sin ninguna modificación).
+Las información sensible del usuario, como datos de inicio de sesión (en caso de requerirse) deberá ser resguardada y tratada con un algoritmo de encriptación
+
+**Funcionalidad
+
+La API deberá finalizar toda transacción u operación realizada dentro del aplicativo, es decir, no deberá quedar pausada la funcionalidad de la aplicación si la API llegara a fallar.
+El 85% de las transacciones realizadas deberán ser completadas con éxito.
