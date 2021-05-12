@@ -71,6 +71,9 @@ A continuación se presenta el diagrama de arquitectura con descripción (Arquit
 *Delete*
 
 **Diagrama de la Base de Datos**
+A continuación, la estructura de la base de datos del sistema queda de la siguiente manera: 
+
+![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagrama_bd.jpg)
 
 **Entidades*
 
