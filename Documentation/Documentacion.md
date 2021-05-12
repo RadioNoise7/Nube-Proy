@@ -305,6 +305,17 @@ video------[File]
 
 ## Ejemplos del Request ##
 
+Métodos POST para la creación de las entidades del sistema:
+
+#### Usuario
+*     {
+        “idUsuario”: 1,
+        “nombreUsuario”: “Mariel Castañeda”, 
+        “username”: “mariel.castañeda”, 
+        “password”: "dasdjnasduoasndmasi",
+        “correo”: “mariel_castañeda@gmail.com”
+      }
+
 ## Criterios de calidad ##
 
 En esta sección se describen los criterios de calidad que son correspondientes a la arquitectura. Se indican cada uno de los criterios junto con una descripción clara y precisa.
