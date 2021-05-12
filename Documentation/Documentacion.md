@@ -219,6 +219,67 @@ video------[File]
 
 
 
+
+#### Usuario
+*   GET/usuarios    
+    Regresa una lista con todos los usuarios registrados en el sistema.    
+*   GET/usuarios/{idUsuario}     
+    Regresa al usuario con el idUsuario proporcionado si es que este se encuentra registrado en el sistema.
+*   POST/usuarios     
+    Se registra un nuevo usuario.
+*   PUT/usuarios/{idUsuario}     
+    Se modifica al usuario con el idUsuario proporcionado si es que este se encuentra registrado en el sistema.
+*   DELETE/usuarios/{idUsuario}     
+    Se elimina al usuario con el idUsuario proporcionado si es que este se encuentra registrado en el sistema.   
+
+
+#### Proveedores de video
+*   GET/proveedores    
+    Regresa una lista con todos los proveedores registrados en el sistema.  
+*   GET/proveedores/{idProveedor}     
+    Regresa al proveedor con el idProveedor proporcionado si es que este se encuentra registrado en el sistema.
+*   POST/proveedores    
+    Se registra un nuevo proveedor.
+*   PUT/proveedores/{idProveedor}     
+    Se modifica al proveedor con el idProveedor proporcionado si es que este se encuentra registrado en el sistema.
+*   DELETE/proveedores/{idProveedor}    
+    Se elimina al proveedor con el idProveedor proporcionado si es que este se encuentra registrado en el sistema.
+
+#### Comentarios
+*   GET/comentarios/{idVideo}    
+    Regresa una lista con todos los comentarios registrados en el sistema para el video con el idVideo proporcionado. 
+*   GET/comentarios/{idComentario}     
+    Regresa el comentario con el idComentario proporcionado si es que este se encuentra registrado en el sistema.
+*   POST/comentarios    
+    Se registra un nuevo comentario.
+*   PUT/comentarios/{idComentario}     
+    Se modifica el comentario con el idComentario proporcionado si es que este se encuentra registrado en el sistema.
+*   DELETE/comentarios/{idComentario}    
+    Se elimina el comentario con el idComentario proporcionado si es que este se encuentra registrado en el sistema.
+
+#### Interacciones
+*   GET/interacciones    
+    Regresa una lista con todos las interacciones registradas en el sistema para el video con el idVideo proporcionado. 
+*   GET/interacciones/{idInteraccion}     
+    Regresa la interacción con el idInteraccion proporcionado si es que este se encuentra registrado en el sistema.
+*   POST/interacciones    
+    Se registra una nueva interacción.
+*   PUT/interacciones/{idInteraccion}     
+    Se modifica la interacción con el idInteraccion proporcionado si es que este se encuentra registrado en el sistema.
+*   DELETE/interacciones/{idInteraccion}
+    Se elimina la interacción con el idInteraccion proporcionado si es que este se encuentra registrado en el sistema.
+
+#### Videos
+*   GET/videos
+    Regresa una lista con todos los videos registrados en el sistema. 
+*   GET/videos/{idVideo}     
+    Regresa el video con el idVideo proporcionado si es que este se encuentra registrado en el sistema.
+*   POST/videos     
+    Se registra un nuevo video.
+*   DELETE/videos/{idVideo}     
+    Se elimina el video con el idVideo proporcionado si es que este se encuentra registrado en el sistema.
+
+
 ## Ejemplos del Request ##
 
 ## Criterios de calidad ##
