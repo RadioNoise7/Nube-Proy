@@ -90,7 +90,7 @@ Las entidades del sistema son los siguientes:
       El usuario puede tener diferentes cuentas en diferentes proveedores.
       La cuenta del usuario debe tener un email y la contraseña ya existente con el proveedor.
 
-*     Proveedor. Entidad que sirve para modelar y generar la proveedor/plataforma a la que pertenece la cuenta de los cursos del usuario.
+*     Proveedor. Entidad que sirve para modelar y generar la proveedor/plataforma a la que pertenece la cuenta del usuario.
       El usuario puede tener acceso a diferentes proveedores.
 
 *     Comentarios. Entidad que sirve para administrar los comentarios que se realizan a los videos subidos por el usuario.
