@@ -86,11 +86,12 @@ Las entidades del sistema son los siguientes:
 *     Tipo de Usuario. Entidad que sirve para poder designar permisos y roles de los usuarios del sistema.
       Dependiendo del tipo de usuario será los permisos que tenga el usuario sobre el sistema.
 
-*     Cuenta. Entidad que sirve para administrar la cuenta de las plataformas que tenga el usuario.
-      El usuario puede tener diferentes cuentas en diferentes plataformas.
+*     Cuenta. Entidad que sirve para administrar la cuenta de las proveedor/plataforma que tenga el usuario.
+      El usuario puede tener diferentes cuentas en diferentes proveedores.
+      La cuenta del usuario debe tener un email y la contraseña ya existente con el proveedor.
 
-*     Plataforma. Entidad que sirve para modelar y generar la plataforma a la que pertenece la cuenta de los cursos del usuario.
-      El usuario puede tener acceso a diferentes plataformas.
+*     Proveedor. Entidad que sirve para modelar y generar la proveedor/plataforma a la que pertenece la cuenta de los cursos del usuario.
+      El usuario puede tener acceso a diferentes proveedores.
 
 *     Comentarios. Entidad que sirve para administrar los comentarios que se realizan a los videos subidos por el usuario.
       Se debe poder visualizar la fecha y el autor del video.
