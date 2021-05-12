@@ -62,13 +62,13 @@ A continuación se presenta el diagrama de arquitectura con descripción (Arquit
 
 **Diagramas de secuencia:**
 
-*Create*
+Enseguida, tenemos 3 diagramas de secuencia que representarán funcionalidades de las partes que consideramos vitales en el sistema: 
 
-*Read*
+![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagram_seq_altaUsuario.png)
 
-*Update*
+![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagram_seq_crearVideo.jpg)
 
-*Delete*
+![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagram_seq_crearComentario.jpg)
 
 **Diagrama de la Base de Datos**
 
