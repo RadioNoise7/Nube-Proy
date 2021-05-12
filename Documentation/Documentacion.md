@@ -87,13 +87,13 @@ Las entidades del sistema son los siguientes:
       Dependiendo del tipo de usuario será los permisos que tenga el usuario sobre el sistema.
 
 *     Cuenta. Entidad que sirve para administrar la cuenta de las plataformas que tenga el usuario.
-*     El usuario puede tener diferentes cuentas en diferentes plataformas.
+      El usuario puede tener diferentes cuentas en diferentes plataformas.
 
 *     Plataforma. Entidad que sirve para modelar y generar la plataforma a la que pertenece la cuenta de los cursos del usuario.
-*     El usuario puede tener acceso a diferentes plataformas.
+      El usuario puede tener acceso a diferentes plataformas.
 
 *     Comentarios. Entidad que sirve para administrar los comentarios que se realizan a los videos subidos por el usuario.
-*     Se debe poder visualizar la fecha y el autor del video.
+      Se debe poder visualizar la fecha y el autor del video.
 
 *     Vídeos. Entidad que sirve para administrar los videos subidos al sistema por el usuario.
 
