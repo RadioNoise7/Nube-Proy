@@ -76,11 +76,21 @@ A continuación, la estructura de la base de datos del sistema queda de la sigui
 
 ![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagrama_bd.jpg)
 
-**Entidades*
+**Entidades**
 
 Las entidades del sistema son los siguientes:
 
-*     Controller. Controladores que reciben y procesan las solicitudes del usuario.
+*     Usuario. Entidad encargada de administrar a los usuarios del sistema. El usuario podra tener permiso a las funcionalidades principales del sistema.
+
+*     Tipo de Usuario. Entidad que sirve para poder designar permisos y roles de los usuarios del sistema. Dependiendo del tipo de usuario será los permisos que tenga el usuario sobre el sistema.
+
+*     Cuenta. Entidad que sirve para administrar la cuenta de las plataformas que tenga el usuario. El usuario puede tener diferentes cuentas en diferentes plataformas.
+
+*     Plataforma. Entidad que sirve para modelar y generar la plataforma a la que pertenece la cuenta de los cursos del usuario. El usuario puede tener acceso a diferentes plataformas.
+
+*     Comentarios. Entidad que sirve para administrar los comentarios que se realizan a los videos subidos por el usuario. Se debe poder visualizar la fecha y el autor del video.
+
+*     Vídeos. Entidad que sirve para administrar los videos subidos al sistema por el usuario.
 
 **Diagrama entidad relación**
 
