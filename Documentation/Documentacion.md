@@ -153,19 +153,19 @@ En esta sección se cita la documentación de la API
 
 ### *Descripción* ###
 #### Usuario ####
-Entidad que representa a los usuarios que interactúan con el sistema y hacen uso de este, interacciones tales como: ver videos, dar like o dislike y comentar, o a al administrador del sistema, quien se encarga de administrar videos, usuarios y proveedores, esto dependerá del rol.
+Entidad que representa a los usuarios que interactúan con el sistema y hacen uso de este, permite que los usuarios tengan acceso al visualizar, comentar o reaccionar(interactuar) con los videos según su tipo o cuenta. El administrador del sistema, quien se encarga de administrar videos, usuarios y proveedores.
 
 #### Proveedores de video ####
-Entidad que representa a los proveedores de algunos videos.
+Entidad que representa a los proveedores de los videos del sistema. Los proveedores proporcionan contenido obtenido de otras cuentas del usuario externos al sistema.
 
 #### Comentarios ####
-Entidad que representa a los comentarios que los usuarios pueden realizar en los videos.
+Entidad que representa a los comentarios que los usuarios pueden realizar en los videos. Se depe administrar la fecha de creación de los comentarios y a que video pertenece el comentario para crear un historial de comentarios.
 
 #### Interacciones ####
-Entidad que representa los likes o dislikes que los usuarios pueden dejar en los videos.
+Entidad que representa los likes o dislikes que los usuarios pueden dejar en los videos. Se debe contabilizar las reacciones(interacciones) que los usuarios realicen a los videos.
 
 #### Videos ####
-Entidad que representa los videos que los usuarios pueden ver en el sitio.
+Entidad que representa los videos que los usuarios pueden ver en el sitio. Los videos pueder ser creados por los usuarios u obtenidos por medio de los proveedores. 
 
 ### *Campos requeridos* ###
 #### Usuario ####
@@ -194,14 +194,18 @@ idVideo
 video    
 
 ### *Validaciones* ###
+
 #### Usuario ####
 idUsuario --- Que no exista otro usuario conel mismo idUsuario (POST)    
 correo --- Que cumpla con el formato de correo  
+
 #### Comentarios ####
 contenido --- Que el campo no este vacio
+
 #### Interacciones ####
 idUsuario | idVideo --- El usuario solo puede reaccionar una vez a un video, por tanto solo puede haber una interacción por cada 
 combinación idVideo e idUsuario.   
+
 #### Videos ####
 video --- Formato valido
 
