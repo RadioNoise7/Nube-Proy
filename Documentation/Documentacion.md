@@ -77,7 +77,7 @@ A continuación se presenta el diagrama de arquitectura con descripción (Arquit
 Descripcion de las entidades del sistema
 
 **Diagrama entidad relación**
-A continuación se presenta el diagrama de Entidad-Relación del sistema:
+A continuación se presenta el diagrama de Entidad-Relación del sistema.
 
 ![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagrama_er.jpg)
 
