@@ -34,7 +34,7 @@ A continuación se listan los documentos de referencias utilizados para el proye
 
 **Descripción de la arquitectura utilizada (Capas) (Describir responsabilidad de las capas)**
 
-![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/capas_arquitectura.png)
+![image](https://raw.githubusercontent.com/RadioNoise7/Nube-Proy/main/Documentation/img/capas_arquitectura.png)
 
 **Capa de Presentación**    
  Aquí agrupamos las clases y métodos que conforman el API del servicio web, tales como GET, POST, PUT, DELETE, etc.
@@ -58,23 +58,23 @@ Adicionalmente tenemos un tipo de objeto que transporta la información entre es
 
 A continuación se presenta el diagrama de arquitectura con descripción (Arquitectura del proyecto completo)
 
-![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagrama_arquitectura.jpg)
+![image](https://raw.githubusercontent.com/RadioNoise7/Nube-Proy/main/Documentation/img/diagrama_arquitectura.jpg)
 
 **Diagramas de secuencia:**
 
 Enseguida, tenemos 3 diagramas de secuencia que representarán funcionalidades de las partes que consideramos vitales en el sistema: 
 
-![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagram_seq_altaUsuario.png)
+![image](https://raw.githubusercontent.com/RadioNoise7/Nube-Proy/main/Documentation/img/diagram_seq_altaUsuario.png)
 
-![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagram_seq_crearVideo.jpg)
+![image](https://raw.githubusercontent.com/RadioNoise7/Nube-Proy/main/Documentation/img/diagram_seq_crearVideo.jpg)
 
-![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagram_seq_crearComentario.jpg)
+![image](https://raw.githubusercontent.com/RadioNoise7/Nube-Proy/main/Documentation/img/diagram_seq_crearComentario.jpg)
 
 **Diagrama de la Base de Datos**
 
 A continuación, la estructura de la base de datos del sistema queda de la siguiente manera: 
 
-![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagrama_bd.jpg)
+![image](https://raw.githubusercontent.com/RadioNoise7/Nube-Proy/main/Documentation/img/diagrama_bd.jpg)
 
 **Entidades**
 
@@ -105,7 +105,7 @@ Las entidades del sistema son los siguientes:
 
 A continuación se presenta el diagrama de Entidad-Relación del sistema.
 
-![image](https://github.com/RadioNoise7/Nube-Proy/blob/main/Documentation/img/diagrama_er.jpg)
+![image](https://raw.githubusercontent.com/RadioNoise7/Nube-Proy/main/Documentation/img/diagrama_er.jpg)
 
 ## Documentación de la API ##
 
