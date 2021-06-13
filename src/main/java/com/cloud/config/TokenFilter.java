@@ -1,4 +1,4 @@
-package main.java.mx.cloud.config;
+package com.cloud.config;
 
 import java.io.IOException;
 
@@ -18,8 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-import mx.uady.cloud.model.Cuenta;
-import mx.uady.cloud.repository.CuentaRepository;
+import com.cloud.model.Usuario;
+import com.cloud.repository.UsuarioRepository;
 
 @Component
 public class TokenFilter extends GenericFilterBean {
@@ -27,7 +27,7 @@ public class TokenFilter extends GenericFilterBean {
     private Logger log = LoggerFactory.getLogger(TokenFilter.class);
 
     @Autowired
-    private CuentaRepository cuentaRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -46,16 +46,16 @@ public class TokenFilter extends GenericFilterBean {
 
         log.info("Header de auth: [{}]", authHeader);
 
-        Cuenta cuenta = cuentaRepository.findByToken(authHeader);
+        Usuario usuario = usuarioRepository.findByToken(authHeader);
 
-        log.info("Cuenta: [{}]", cuenta);
+        log.info("Usuario: [{}]", usuario);
 
-        if (cuenta == null) {
+        if (usuario == null) {
             chain.doFilter(request, response);
             return;
         }
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(cuenta, null, null);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(usuario, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         

@@ -1,4 +1,4 @@
-package main.java.mx.cloud;
+package com.cloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-public class VideoCloudApplication {
+public class RestApplication {
 
 	public static void main(String[] args) {
-		VideoCloudApplication.run(VideoCloudApplication.class, args);
+		SpringApplication.run(RestApplication.class, args);
 	}
 
 }
