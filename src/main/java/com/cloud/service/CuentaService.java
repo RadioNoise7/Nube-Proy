@@ -73,7 +73,7 @@ public class CuentaService {
         Cuenta cuenta = new Cuenta();
 
         cuenta.setNombre(request.getNombre());
-        cuenta.setCarrera(request.getCarrera());
+     
 
         Usuario usuario = new Usuario();
 
@@ -101,7 +101,6 @@ public class CuentaService {
     public Cuenta actualizarCuenta(Integer id, CuentaRequest request) {
         // Validar comentario
         Cuenta cuentaEncontrado = getCuenta(id);
-        cuentaEncontrado.setCarrera(request.getCarrera());
         cuentaEncontrado.setNombre(request.getNombre());
         // cuentaEncontrado.setComentario();
         cuentaRepository.save(cuentaEncontrado);

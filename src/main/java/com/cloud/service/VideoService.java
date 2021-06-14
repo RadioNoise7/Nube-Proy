@@ -1,5 +1,11 @@
 package com.cloud.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -11,13 +17,16 @@ import com.cloud.model.Cuenta;
 import com.cloud.model.Proveedor;
 import com.cloud.model.Video;
 import com.cloud.model.VideoLlave;
+
 import com.cloud.model.Request.VideoRequest;
 import com.cloud.repository.CuentaRepository;
 import com.cloud.repository.ProveedorRepository;
 import com.cloud.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 @Service
 public class VideoService {
 
@@ -28,6 +37,7 @@ public class VideoService {
   @Autowired
   private ProveedorRepository proveedorRepository;
 
+  
   public List<Video> getVideos() {
     List<Video> videos = new LinkedList<>();
 
@@ -63,7 +73,8 @@ public class VideoService {
   }
 
   @Transactional
-  public Video crearVideo(VideoRequest request) {
+  public Video crearVideo(VideoRequest request, MultipartFile file) throws IOException{
+    String fileName= StringUtils.cleanPath(file.getOriginalFilename());
 
     Video video = new Video();
 
@@ -74,7 +85,29 @@ public class VideoService {
     video.setCuenta(cuenta);
     video.setProveedor(proveedor);
     video.setHoras(request.getHoras());
+    video.setFileVideo(fileName);
     video = videoRepository.save(video);
+
+    String uploadDir= "./video/"+ video.getId();
+
+    Path uploadPath= Paths.get(uploadDir);
+    if(!Files.exists(uploadPath)){
+      Files.createDirectories(uploadPath);
+
+    }
+    try(InputStream inputStream= file.getInputStream()){
+      
+    Path filePath= uploadPath.resolve(fileName);
+    Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+    }catch(IOException exception){
+      throw new IOException("No se pudo guardar el archivo" + fileName);
+    }
+
+    
+
+  
+    
 
     return video;
   }

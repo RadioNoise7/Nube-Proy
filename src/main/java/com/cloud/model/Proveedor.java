@@ -25,14 +25,14 @@ public class Proveedor {
     private Integer id;
 
     @Column(name = "nombre_proveedorProveedor")
-    private String nombre_proveedor_proveedor;
+    private String nombre_proveedor;
 
     @Column(name = "urlProveedor")
     private String urlProveedor;
 
     public Proveedor(){}
 
-    public Proveedor(Integer id,String nombre_proveedor,Integer urlProveedor){
+    public Proveedor(Integer id,String nombre_proveedor,String urlProveedor){
         this.id = id;
         this.nombre_proveedor = nombre_proveedor;
         this.urlProveedor = urlProveedor;
@@ -54,12 +54,13 @@ public class Proveedor {
         this.nombre_proveedor = nombre_proveedor;
     }
 
-    public Integer getUrlProveedor() {
-        return this.urlProveedor;
+    public String getUrlProveedor() {
+        return urlProveedor;
     }
 
-    public void setUrlProveedor(Integer urlProveedor) {
+    public void setUrlProveedor(String urlProveedor) {
         this.urlProveedor = urlProveedor;
     }
+
 
 }

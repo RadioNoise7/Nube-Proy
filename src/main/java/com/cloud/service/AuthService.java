@@ -29,7 +29,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import com.cloud.model.Cuenta;
 import com.cloud.model.Usuario;
 import com.cloud.model.Comentario;
-import com.cloud.model.Carrera;
 import com.cloud.model.Video;
 import com.cloud.model.Request.CuentaRequest;
 import com.cloud.model.Request.UsuarioRequest;

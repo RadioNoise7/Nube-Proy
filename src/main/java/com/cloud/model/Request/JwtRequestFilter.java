@@ -18,6 +18,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 //import com.javainuse.service.JwtUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
+
+import com.cloud.config.JWTTokenUtil;
 import com.cloud.service.AuthService;
 
 @Component
@@ -27,7 +29,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private AuthService jwtUserDetailsService;
 
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	private JWTTokenUtil jwtTokenUtil;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

@@ -29,7 +29,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import org.springframework.http.ResponseEntity;
 
-import com.cloud.config.JwtTokenUtil;
+import com.cloud.config.JWTTokenUtil;
 import com.cloud.model.Cuenta;
 import com.cloud.model.Usuario;
 import com.cloud.model.Request.UsuarioRequest;
@@ -46,7 +46,7 @@ public class AuthRest {
     private AuthService authService;
 
     @Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	private JWTTokenUtil jwtTokenUtil;
 
     @Autowired
 	private UserDetailsService jwtInMemoryUserDetailsService;

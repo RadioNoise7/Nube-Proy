@@ -1,13 +1,18 @@
 package com.cloud.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "video")
@@ -27,6 +32,9 @@ public class Video {
 
   @Column(name = "nombreVideo")
   private String nombre_video;
+
+  @Column(name = "fileVideo")
+  private String fileVideo;
 
   @OneToMany(mappedBy = "video")
   private List<Comentario> comentarios;
@@ -76,6 +84,25 @@ public class Video {
 
 public void setCuentas(List<Cuenta> cuentas) {
     this.cuentas = cuentas;
+}
+
+
+
+
+
+  public String getFileVideo() {
+  return fileVideo;
+}
+
+public void setFileVideo(String fileVideo) {
+  this.fileVideo = fileVideo;
+}
+
+@Transient
+public String getVideoPath(){
+  if(fileVideo==null || id==null)return null;
+  return "/video/"+ id +"/"+fileVideo;
+  
 }
 
   @Override

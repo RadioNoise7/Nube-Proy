@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-import com.cloud.model.Carrera;
+import com.cloud.model.Proveedor;
 
 public class CuentaRequest {
 

@@ -33,8 +33,8 @@ public class ProveedorService {
     public Proveedor crearProveedor(ProveedorRequest request) {
         Proveedor proveedor = new Proveedor();
 
-        proveedor.setNombre(request.getNombre());
-        proveedor.setHoras(request.getHoras());
+        proveedor.setNombreProveedor(request.getNombre());
+        proveedor.setHoras(request.getHoras();
         proveedor = proveedorRepository.save(proveedor);
 
         return proveedor;
@@ -53,7 +53,7 @@ public class ProveedorService {
     }
 
     private Proveedor setProveedorNewValues(Proveedor proveedorRef,ProveedorRequest proveedorEdit){
-        proveedorRef.setNombre(proveedorEdit.getNombre());
+        proveedorRef.setNombreProveedor(proveedorEdit.getNombre());
         proveedorRef.setHoras(proveedorEdit.getHoras());
         return proveedorRef;
     }

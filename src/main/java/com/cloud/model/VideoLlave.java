@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class VideosLlave implements Serializable {
+public class VideoLlave implements Serializable {
 
   @Column(name="idCuenta")
   private Integer id_cuenta;
@@ -14,9 +14,9 @@ public class VideosLlave implements Serializable {
   @Column(name="idProveedor")
   private Integer id_proveedor;
 
-  public VideosLlave() {}
+  public VideoLlave() {}
 
-  public VideosLlave(Integer id_cuenta, Integer id_proveedor) {
+  public VideoLlave(Integer id_cuenta, Integer id_proveedor) {
     this.id_cuenta = id_cuenta;
     this.id_proveedor = id_proveedor;
   }

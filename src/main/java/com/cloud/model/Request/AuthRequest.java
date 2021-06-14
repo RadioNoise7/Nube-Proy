@@ -1,10 +1,12 @@
 package com.cloud.model.Request;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotEmpty;
+
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 
@@ -40,6 +42,7 @@ public class AuthRequest implements Serializable {
         this.setPassword(password);
     }
 
+
     public String getUsuario() {
         return usuario;
     }
@@ -69,7 +72,7 @@ public class AuthRequest implements Serializable {
     @Override
     public String toString() {
         return "{" +
-            " nombre='" + getNombre() + "'" +
+            " nombre='" + getUsuario() + "'" +
             "}";
     }
     
