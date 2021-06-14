@@ -47,11 +47,7 @@
 			<artifactId>javax.el</artifactId>
 			<version>3.0.0</version>
 		 </dependency>
-		 <!-- Dependecia nueva -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		
 			<!-- Nueva dependencia -->
 			<dependency>
 				<groupId>mysql</groupId>
@@ -72,6 +68,18 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-validation</artifactId>
+			</dependency>
+
+			<!-- Dependencias de Spring Security y JWT -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-security</artifactId>
+			</dependency>
+	
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>0.9.1</version>
 			</dependency>
 
 	</dependencies>

@@ -1,5 +1,6 @@
 package com.cloud.rest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -47,7 +48,7 @@ public class VideoRest {
   }
 
   @PostMapping("/videos")
-  public ResponseEntity<Video> postVideos(@RequestBody VideoRequest request, @RequestParam("file") MultipartFile file) throws URISyntaxException {
+  public ResponseEntity<Video> postVideos(@RequestBody VideoRequest request, @RequestParam("file") MultipartFile file) throws URISyntaxException, IOException {
     Video videosCreada = videosService.crearVideo(request, file);
 
     return ResponseEntity.created(new URI("/videos/" + videosCreada.getId())).body(videosCreada);

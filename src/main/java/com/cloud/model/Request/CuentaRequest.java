@@ -7,6 +7,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import com.cloud.model.Proveedor;
+import com.cloud.model.Tipo;
 
 public class CuentaRequest {
 
@@ -20,6 +21,8 @@ public class CuentaRequest {
     @Email
     @NotNull
     private String correo;
+
+    private Tipo tipo; 
 
     public CuentaRequest() {
     }

@@ -84,7 +84,7 @@ public class VideoService {
     video.setId(request.getId());
     video.setCuenta(cuenta);
     video.setProveedor(proveedor);
-    video.setHoras(request.getHoras());
+    //video.setHoras(request.getHoras());
     video.setFileVideo(fileName);
     video = videoRepository.save(video);
 
@@ -103,11 +103,6 @@ public class VideoService {
     }catch(IOException exception){
       throw new IOException("No se pudo guardar el archivo" + fileName);
     }
-
-    
-
-  
-    
 
     return video;
   }
@@ -143,7 +138,7 @@ public class VideoService {
   public Video actualizarVideo(VideoLlave id, VideoRequest request) {
     Video videoEncontrada = getVideo(id);
 
-    videoEncontrada.setHoras(request.getHoras());
+    //videoEncontrada.setHoras(request.getHoras());
     videoRepository.save(videoEncontrada);
 
     return videoEncontrada;

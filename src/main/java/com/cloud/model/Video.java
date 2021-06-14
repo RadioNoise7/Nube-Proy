@@ -78,32 +78,26 @@ public class Video {
     this.proveedor = proveedor;
   }
 
-  public List<Cuenta> getCuentas() {
-    return cuentas;
-}
-
-public void setCuentas(List<Cuenta> cuentas) {
-    this.cuentas = cuentas;
-}
-
-
-
-
-
-  public String getFileVideo() {
-  return fileVideo;
-}
-
-public void setFileVideo(String fileVideo) {
-  this.fileVideo = fileVideo;
-}
-
-@Transient
-public String getVideoPath(){
-  if(fileVideo==null || id==null)return null;
-  return "/video/"+ id +"/"+fileVideo;
+  public Cuenta getCuentas() {
+    return this.cuenta;
+  }
+  public void setCuentas(Cuenta cuentas) {
+    this.cuenta = cuentas;
+  }
   
-}
+  public String getFileVideo() {
+    return fileVideo;
+  }
+
+  public void setFileVideo(String fileVideo) {
+    this.fileVideo = fileVideo;
+  }
+
+  @Transient
+  public String getVideoPath() {
+    if(fileVideo==null || id==null)return null;
+    return "/video/"+ id +"/"+fileVideo; 
+  }
 
   @Override
   public String toString() {

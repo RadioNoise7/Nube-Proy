@@ -83,17 +83,18 @@ public class AuthService implements UserDetailsService{
 
         Usuario usuarioSave = usuarioRepository.save(usuarioCreate);
         Cuenta cuenta = new Cuenta();
-        cuenta.setNombre(request.getNombre());
+        cuenta.setNombre(request.getnombre());
 
-        if(request.getComentario()!=null && request.getComentario()>0){
+        /* if(request.getComentario()!=null && request.getComentario()>0){
             Comentario comentario = comentarioRepository.findById(request.getComentario()).get();
             cuenta.setComentario(comentario);
-        }
+        } */
 
-        if(request.getCarrera()!=null){
-            Carrera carrera = Carrera.valueOf(request.getCarrera());
-            cuenta.setCarrera(carrera);
-        }
+        //Carrera????
+        // if(request.getCarrera()!=null){
+        //     Carrera carrera = Carrera.valueOf(request.getCarrera());
+        //     cuenta.setCarrera(carrera);
+        // }
 
         cuenta.setUsuario(usuarioSave);
         cuenta = cuentaRepository.save(cuenta);
@@ -120,18 +121,4 @@ public class AuthService implements UserDetailsService{
         usuario.setToken(null);
         usuarioRepository.save(usuario);
     }
-
-    /* @Transactional
-    public void authenticate(String username, String password) throws Exception {
-		Objects.requireNonNull(username);
-		Objects.requireNonNull(password);
-
-		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED", e);
-		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
-		}
-	} */
 }

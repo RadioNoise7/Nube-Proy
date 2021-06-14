@@ -59,13 +59,12 @@ public class AuthRequest implements Serializable {
         this.password = password;
     }
 
-    public AuthRequest(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public AuthRequest nombre(String nombre) {
-        this.nombre = nombre;
-        return this;
+    public String getnombre() {
+        return this.nombre;
     }
 
     //fin nuevo
