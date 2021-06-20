@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cloud</groupId>
-	<artifactId>Streaming</artifactId>
+	<artifactId>StreamingApp</artifactId>
 	<version>0.0.1</version>
-	<name>Streaming</name>
+	<name>StreamingApp</name>
 	<description>Cloud class project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
