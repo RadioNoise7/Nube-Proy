@@ -1,6 +1,5 @@
 package com.cloud.service;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.IOException;

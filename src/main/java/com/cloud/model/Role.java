@@ -1,7 +1,5 @@
 package com.cloud.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "roles")
-public class Role /*implements Serializable*/ {
+public class Role {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

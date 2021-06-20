@@ -1,17 +1,12 @@
 package com.cloud.service;
 
 import java.util.ArrayList;
-import java.util.Optional;
-import java.util.UUID;
-
-import javax.validation.constraints.Null;
 
 import org.springframework.transaction.annotation.Transactional;
 
 //import io.jsonwebtoken.lang.Objects;
 import java.util.Objects;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,24 +19,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-//import com.cloud.exception.*;
-import com.cloud.exception.NotFoundException;
-import com.cloud.exception.UnauthorizedException;
-
 import com.cloud.config.JWTTokenUtil;
-import com.cloud.model.Account;
 import com.cloud.model.User;
-import com.cloud.model.Commentary;
-import com.cloud.model.Video;
-import com.cloud.model.Request.AccountRequest;
 import com.cloud.model.Request.LoginRequest;
 import com.cloud.model.Request.RegisterRequest;
-import com.cloud.model.Request.UserRequest;
-import com.cloud.model.Request.AuthRequest;
-import com.cloud.repository.AccountRepository;
 import com.cloud.repository.UserRepository;
-import com.cloud.repository.VideoRepository;
-
 @Service
 public class AuthService implements UserDetailsService{
     @Autowired
