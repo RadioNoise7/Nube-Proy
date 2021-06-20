@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.cloud.model.Cuenta;
+import com.cloud.model.Account;
 
 @Repository
-public interface CuentaRepository extends CrudRepository<Cuenta, Integer> {
+public interface AccountRepository extends CrudRepository<Account, Integer> {
 
-    List<Cuenta> findByNombre(String nombre);
+    List<Account> findByAccountname(String accountname);
 
     // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
 
-    List<Cuenta> findByNombreContaining(String nombre); // LIKE %nombre%
+    List<Account> findByAccountnameContaining(String accountname); // LIKE %nombre%
 }

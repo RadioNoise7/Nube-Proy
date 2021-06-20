@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cloud.model.Comentario;
-import com.cloud.service.ComentarioService;
+import com.cloud.model.Commentary;
+import com.cloud.service.CommentaryService;
 
 @RestController
 @RequestMapping("/api")
-public class ComentarioRest{
+public class CommentaryRest{
 
     @Autowired
-    private ComentarioService comentarioService;
+    private CommentaryService comentarioService;
 
     @GetMapping("/comentarios")
-    public ResponseEntity<List<Comentario>> obtenerUsuario() {
-        List<Comentario> comentarios = comentarioService.getComentarios();
+    public ResponseEntity<List<Commentary>> obtenerUsuario() {
+        List<Commentary> comentarios = comentarioService.getComentarios();
         return ResponseEntity.ok(comentarios);
     }
     

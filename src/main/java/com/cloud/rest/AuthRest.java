@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,17 +28,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import org.springframework.http.ResponseEntity;
-
 import com.cloud.config.JWTTokenUtil;
-import com.cloud.model.Cuenta;
-import com.cloud.model.Usuario;
-import com.cloud.model.Request.UsuarioRequest;
+import com.cloud.config.JwtResponse;
+import com.cloud.model.Account;
+import com.cloud.model.User;
+import com.cloud.model.Request.UserRequest;
 import com.cloud.model.Request.AuthRequest;
-import com.cloud.model.Request.JwtResponse;
-import com.cloud.model.Request.CuentaRequest;
+import com.cloud.model.Request.LoginRequest;
+import com.cloud.model.Request.RegisterRequest;
+import com.cloud.model.Request.AccountRequest;
 import com.cloud.service.AuthService;
-import com.cloud.service.CuentaService;
+import com.cloud.service.AccountService;
+import com.cloud.service.EmailService;
 
 @RestController
 public class AuthRest {
@@ -53,38 +55,22 @@ public class AuthRest {
 
     @Autowired
 	private AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/register")
-    public ResponseEntity<Cuenta> postRegister(@RequestBody @Valid AuthRequest request)throws URISyntaxException {
-        Cuenta cuenta = authService.registrarCuenta(request);
-        return ResponseEntity.created(new URI("cuentas" + cuenta.getId())).body(cuenta);
+    public ResponseEntity<?> postRegister(@RequestBody @Valid RegisterRequest request)throws Exception {
+        
+        return ResponseEntity.ok(authService.register(request, emailService));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> postLogin(@RequestBody AuthRequest request) throws Exception {
-        //String token = authService.login(request);
+    public ResponseEntity<JwtResponse> postLogin(@RequestBody LoginRequest request, @RequestHeader("user-agent") String userAgent) throws Exception {
+        User usuarioLoggeado = authService.login(request, emailService, userAgent, jwtTokenUtil, jwtInMemoryUserDetailsService, authenticationManager);
 
-        authenticate(request.getUsuario(), request.getPassword());
-
-		final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(request.getUsuario());
-		final String token = jwtTokenUtil.generateToken(userDetails);
-        //JwtResponse formatToken = new JwtResponse(token);
-
-		return ResponseEntity.ok(token);
+		return ResponseEntity.ok().body(new JwtResponse(usuarioLoggeado.getToken()));
     }
-
-    public void authenticate(String username, String password) throws Exception {
-		Objects.requireNonNull(username);
-		Objects.requireNonNull(password);
-
-		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED", e);
-		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
-		}
-	}
 
     @PostMapping("/logout/{id}")
     public ResponseEntity<Void> postLogout(@PathVariable Integer id ) throws URISyntaxException {
@@ -93,9 +79,8 @@ public class AuthRest {
     }
 
     @GetMapping("/self")
-    public ResponseEntity<Usuario> getLoggerdUser() {
-        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.ok(usuario);
+    public ResponseEntity<Object> getLoggedUser() {
+        return ResponseEntity.status(HttpStatus.OK).body(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 
 }

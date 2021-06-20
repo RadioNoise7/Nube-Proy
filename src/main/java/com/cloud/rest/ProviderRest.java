@@ -18,32 +18,32 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
-import com.cloud.model.Proveedor;
-import com.cloud.model.Request.ProveedorRequest;
-import com.cloud.service.ProveedorService;
+import com.cloud.model.Provider;
+import com.cloud.model.Request.ProviderRequest;
+import com.cloud.service.ProviderService;
 
 @RestController // Metaprogramacion
 @RequestMapping("/api")
-public class ProveedorRest {
+public class ProviderRest {
 
     @Autowired
-    private ProveedorService proveedorService;
+    private ProviderService proveedorService;
 
     // GET /api/cuentas
     @GetMapping("/proveedores")
-    public ResponseEntity<List<Proveedor>> getProveedores() {
+    public ResponseEntity<List<Provider>> getProveedores() {
         return ResponseEntity.ok().body(proveedorService.getProveedores());
     }
 
     @GetMapping("/proveedores/buscar") // RequestParam = Query parameter -> ?llave=valor&llave=valor
-    public ResponseEntity<List<Proveedor>> searchProveedores(@RequestParam("nombre") String nombre) {
+    public ResponseEntity<List<Provider>> searchProveedores(@RequestParam("nombre") String nombre) {
         return ResponseEntity.ok().body(proveedorService.buscarProveedores(nombre));
     }
 
     @PostMapping("/proveedores") // POST api/proveedores
-    public ResponseEntity<Proveedor> postProveedores(@RequestBody @Valid ProveedorRequest request) throws URISyntaxException {
+    public ResponseEntity<Provider> postProveedores(@RequestBody @Valid ProviderRequest request) throws URISyntaxException {
 
-        Proveedor proveedor = proveedorService.crearProveedor(request);
+        Provider proveedor = proveedorService.crearProveedor(request);
 
         // 201 Created
         // Header: Location
@@ -51,12 +51,12 @@ public class ProveedorRest {
     }
 
     @PutMapping("/proveedores/{id}") // PUT api/proveedores/{id}
-    public ResponseEntity<Proveedor> editarPorfesor(@PathVariable("id") Integer id, @RequestBody ProveedorRequest proveedor) {
+    public ResponseEntity<Provider> editarPorfesor(@PathVariable("id") Integer id, @RequestBody ProviderRequest proveedor) {
         return ResponseEntity.ok().body(proveedorService.actualizarProveedor(id,proveedor));
     }
 
     @DeleteMapping("/proveedores/{id}")
-    public ResponseEntity<Proveedor> eliminarProveedor(@PathVariable("id") Integer id) {
+    public ResponseEntity<Provider> eliminarProveedor(@PathVariable("id") Integer id) {
         return ResponseEntity.ok().body(proveedorService.eliminarProveedor(id));
     }
     

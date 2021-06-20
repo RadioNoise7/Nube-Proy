@@ -8,33 +8,30 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "proveedor")
-public class Proveedor {
+@Table(name = "providers")
+public class Provider {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nombre_proveedorProveedor")
-    private String nombre_proveedor;
+    @Column(name = "providername")
+    private String providername;
 
-    @Column(name = "urlProveedor")
+    @Column(name = "providerUrl")
     private String urlProveedor;
 
-    public Proveedor(){}
+    public Provider() { }
 
-    public Proveedor(Integer id,String nombre_proveedor,String urlProveedor){
+    public Provider(Integer id,String nombreProveedor,String urlProveedor){
         this.id = id;
-        this.nombre_proveedor = nombre_proveedor;
+        this.providername = nombreProveedor;
         this.urlProveedor = urlProveedor;
     }
 
@@ -47,11 +44,11 @@ public class Proveedor {
     }
 
     public String getNombreProveedor() {
-        return this.nombre_proveedor;
+        return this.providername;
     }
 
-    public void setNombreProveedor(String nombre_proveedor) {
-        this.nombre_proveedor = nombre_proveedor;
+    public void setNombreProveedor(String nombreProveedor) {
+        this.providername = nombreProveedor;
     }
 
     public String getUrlProveedor() {

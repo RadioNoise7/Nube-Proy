@@ -6,28 +6,28 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-import com.cloud.model.Proveedor;
-import com.cloud.model.Tipo;
+import com.cloud.model.Provider;
+import com.cloud.model.Role;
 
-public class CuentaRequest {
+public class AccountRequest {
 
     @NotEmpty
     @Size(min = 1, max = 255)
     private String nombre;
 
     @NotNull
-    private Proveedor proveedor;
+    private Provider proveedor;
 
     @Email
     @NotNull
     private String correo;
 
-    private Tipo tipo; 
+    private Role tipo; 
 
-    public CuentaRequest() {
+    public AccountRequest() {
     }
 
-    public CuentaRequest(String nombre) {
+    public AccountRequest(String nombre) {
         this.nombre = nombre;
     }
 
@@ -39,15 +39,15 @@ public class CuentaRequest {
         this.nombre = nombre;
     }
 
-    public Tipo getTipo() {
+    public Role getTipo() {
         return this.tipo;
     }
 
-    public void setTipo(Tipo tipo) {
+    public void setTipo(Role tipo) {
         this.tipo = tipo;
     }
 
-    public CuentaRequest nombre(String nombre) {
+    public AccountRequest nombre(String nombre) {
         this.nombre = nombre;
         return this;
     }
@@ -60,11 +60,11 @@ public class CuentaRequest {
         this.correo = correo;
     }
 
-    public Proveedor getProveedor() {
+    public Provider getProveedor() {
         return this.proveedor;
     }
 
-    public void setProveedor(Proveedor proveedor) {
+    public void setProveedor(Provider proveedor) {
         this.proveedor = proveedor;
     }
 

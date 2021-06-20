@@ -1,4 +1,4 @@
-package com.cloud.model.Request;
+package com.cloud.config;
 
 import java.io.Serializable;
 

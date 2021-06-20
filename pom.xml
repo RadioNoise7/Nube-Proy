@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cloud</groupId>
-	<artifactId>rest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>rest</name>
+	<artifactId>Streaming</artifactId>
+	<version>0.0.1</version>
+	<name>Streaming</name>
 	<description>Cloud class project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
@@ -32,15 +32,10 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<dependency> 
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.13.Final</version>
+			<version>7.0.1.Final</version>
 		</dependency> 
 		<dependency> 
 			<groupId>org.glassfish</groupId>
@@ -75,13 +70,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-security</artifactId>
 			</dependency>
-	
 			<dependency>
 				<groupId>io.jsonwebtoken</groupId>
 				<artifactId>jjwt</artifactId>
 				<version>0.9.1</version>
 			</dependency>
-
+			<!-- Dependencia para el Mail sender -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-mail</artifactId>
+			</dependency>
 	</dependencies>
 
 	<build>

@@ -18,8 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.cloud.model.Usuario;
-import com.cloud.repository.UsuarioRepository;
+import com.cloud.model.User;
+import com.cloud.repository.UserRepository;
 
 @Component
 public class TokenFilter extends GenericFilterBean {
@@ -27,7 +27,7 @@ public class TokenFilter extends GenericFilterBean {
     private Logger log = LoggerFactory.getLogger(TokenFilter.class);
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository usuarioRepository;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -35,8 +35,6 @@ public class TokenFilter extends GenericFilterBean {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         
-        // Authorization: abc
-        // Authorization: def
         String authHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION); 
         
         if(authHeader == null || authHeader.isEmpty()) {
@@ -46,16 +44,16 @@ public class TokenFilter extends GenericFilterBean {
 
         log.info("Header de auth: [{}]", authHeader);
 
-        Usuario usuario = usuarioRepository.findByToken(authHeader);
+        User user = usuarioRepository.findByToken(authHeader.substring(7));
 
-        log.info("Usuario: [{}]", usuario);
+        //log.info("Usuario: [{}]", user.toString());
 
-        if (usuario == null) {
+        if (user == null) {
             chain.doFilter(request, response);
             return;
         }
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(usuario, null, null);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         

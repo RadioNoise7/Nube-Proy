@@ -1,106 +1,90 @@
 package com.cloud.model;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.springframework.data.annotation.Transient;
 
 @Entity
-@Table(name = "video")
+@Table(name = "videos")
 public class Video {
 
-  @EmbeddedId
-  @JsonIgnore
-  private VideoLlave id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
   @ManyToOne
-  @JoinColumn(name="idCuenta", insertable = false, updatable = false)
-  private Cuenta cuenta;
+  @JoinColumn(name="user_id", insertable = false, updatable = false)
+  @JsonBackReference
+  private User user;
 
-  @ManyToOne
-  @JoinColumn(name="idProveedor", insertable = false, updatable = false)
-  private Proveedor proveedor;
+  @NotBlank
+  private String title;
 
-  @Column(name = "nombreVideo")
-  private String nombre_video;
+  private String description;
 
-  @Column(name = "fileVideo")
-  private String fileVideo;
+  @Column(name = "file_url")
+  private String fileUrl;
 
-  @OneToMany(mappedBy = "video")
-  private List<Comentario> comentarios;
-
-  public Video() {}
-
-  public Video(VideoLlave id, String nombre_video) {
-    this.id = id;
-    this.nombre_video = nombre_video;
-  }
-
-  public void setId(VideoLlave id) {
-    this.id = id;
-  }
-
-  public VideoLlave getId() {
+  public Integer getId() {
     return this.id;
   }
 
-  public String getNombreVideo() {
-    return nombre_video;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public void setNombreVideo(String nombre_video) {
-    this.nombre_video = nombre_video;
+  public String getTitle() {
+    return title;
   }
 
-  public Cuenta getCuenta() {
-    return this.cuenta;
+  public void setTitle(String title) {
+    this.title = title;
   }
 
-  public void setCuenta(Cuenta cuenta) {
-    this.cuenta = cuenta;
+  public String getDescription() {
+    return this.description;
   }
 
-  public Proveedor getProveedor() {
-    return this.proveedor;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
-  public void setProveedor(Proveedor proveedor) {
-    this.proveedor = proveedor;
+  public User getUser() {
+    return this.user;
   }
 
-  public Cuenta getCuentas() {
-    return this.cuenta;
-  }
-  public void setCuentas(Cuenta cuentas) {
-    this.cuenta = cuentas;
-  }
-  
-  public String getFileVideo() {
-    return fileVideo;
+  public void setUser(User user) {
+    this.user = user;
   }
 
-  public void setFileVideo(String fileVideo) {
-    this.fileVideo = fileVideo;
+  public String getFileUrl() {
+    return this.fileUrl;
+  }
+
+  public void setFileUrl(String fileUrl) {
+    this.fileUrl = fileUrl;
   }
 
   @Transient
   public String getVideoPath() {
-    if(fileVideo==null || id==null)return null;
-    return "/video/"+ id +"/"+fileVideo; 
+    if(fileUrl==null || id==null)return null;
+    return "/video/"+ id +"/"+fileUrl; 
   }
 
   @Override
   public String toString() {
-    return ( "{" + this.getCuenta() + "," + this.getProveedor() + "," + this.getNombreVideo() + "}");
+    return ( "{" + this.getUser() + "," + this.getTitle() + "," + this.getDescription() + "}");
   }
 }

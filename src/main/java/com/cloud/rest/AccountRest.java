@@ -18,48 +18,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cloud.model.Cuenta;
-import com.cloud.model.Request.CuentaRequest;
-import com.cloud.service.CuentaService;
+import com.cloud.model.Account;
+import com.cloud.model.Request.AccountRequest;
+import com.cloud.service.AccountService;
 
 @RestController // Metaprogramacion
 @RequestMapping("/api")
-public class CuentaRest {
+public class AccountRest {
 
     @Autowired
-    private CuentaService cuentaService;
+    private AccountService cuentaService;
 
     // GET /api/cuentas
     @GetMapping("/cuentas")
-    public ResponseEntity<List<Cuenta>> getCuentas() {
+    public ResponseEntity<List<Account>> getCuentas() {
         return ResponseEntity.ok().body(cuentaService.getCuentas());
     }
 
     @GetMapping("/cuentas/{id}")
-    public ResponseEntity<Cuenta> getCuenta(@PathVariable Integer id) {
+    public ResponseEntity<Account> getCuenta(@PathVariable Integer id) {
         return ResponseEntity.ok().body(cuentaService.getCuenta(id));
     }
 
     @GetMapping("/cuentas/buscar") // RequestParam = Query parameter -> ?llave=valor&llave=valor
-    public ResponseEntity<List<Cuenta>> searchCuentas(@RequestParam("nombre") String nombre) {
-        return ResponseEntity.ok().body(cuentaService.buscarCuentas(nombre));
+    public ResponseEntity<List<Account>> searchCuentas(@RequestParam("nombre") String nombre) {
+        return ResponseEntity.ok().body(cuentaService.getAccountByAccountname(nombre));
     }
 
     // POST /api/cuentas
-    @PostMapping("/cuentas")
-    public ResponseEntity<Cuenta> postCuentas(@RequestBody @Valid CuentaRequest request) throws URISyntaxException {
+    /*@PostMapping("/cuentas")
+    public ResponseEntity<Account> postCuentas(@RequestBody @Valid CuentaRequest request) throws URISyntaxException {
 
         // RequestBody le indica a Java que estamos esperando un request que cumpla con los campos del Objeto CuentaRequest
 
-        Cuenta cuenta = cuentaService.crearCuenta(request);
+        Account cuenta = cuentaService.crearCuenta(request);
 
         // 201 Created
         // Header: Location
         return ResponseEntity.created(new URI("/cuentas/" + cuenta.getId())).body(cuenta);
-    }
+    }*/
 
     @PutMapping("/cuentas/{id}")
-    public ResponseEntity<Cuenta> actualizarCuenta(@RequestBody @Valid CuentaRequest request,
+    public ResponseEntity<Account> actualizarCuenta(@RequestBody @Valid AccountRequest request,
             @PathVariable Integer id) {
         return ResponseEntity.ok().body(cuentaService.actualizarCuenta(id, request));
     }

@@ -3,7 +3,7 @@ package com.cloud.model.Request;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class ProveedorRequest {
+public class ProviderRequest {
     
     @NotEmpty(message = "El nombre no puede estar vacío.")
     @Size(min = 1, max = 255)
@@ -11,10 +11,10 @@ public class ProveedorRequest {
 
     private String urlProveedor;
 
-    public ProveedorRequest() {
+    public ProviderRequest() {
     }
 
-    public ProveedorRequest(String nombre, String urlProveedor) {
+    public ProviderRequest(String nombre, String urlProveedor) {
         this.nombre = nombre;
         this.urlProveedor = urlProveedor;
     }
@@ -27,7 +27,7 @@ public class ProveedorRequest {
         this.nombre = nombre;
     }
 
-    public ProveedorRequest nombre(String nombre) {
+    public ProviderRequest nombre(String nombre) {
         this.nombre = nombre;
         return this;
     }
@@ -40,7 +40,7 @@ public class ProveedorRequest {
         this.urlProveedor = urlProveedor;
     }
 
-    public ProveedorRequest urlProveedor(String urlProveedor){
+    public ProviderRequest urlProveedor(String urlProveedor){
         this.urlProveedor = urlProveedor;
         return this;
     }

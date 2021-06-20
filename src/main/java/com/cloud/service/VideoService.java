@@ -1,5 +1,8 @@
 package com.cloud.service;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -8,19 +11,19 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import com.cloud.exception.NotFoundException;
-import com.cloud.model.Cuenta;
-import com.cloud.model.Proveedor;
+import com.cloud.model.Provider;
+import com.cloud.model.User;
 import com.cloud.model.Video;
-import com.cloud.model.VideoLlave;
 
 import com.cloud.model.Request.VideoRequest;
-import com.cloud.repository.CuentaRepository;
-import com.cloud.repository.ProveedorRepository;
+import com.cloud.repository.AccountRepository;
+import com.cloud.repository.ProviderRepository;
 import com.cloud.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,115 +35,93 @@ public class VideoService {
 
   @Autowired
   private VideoRepository videoRepository;
-  @Autowired
-  private CuentaRepository cuentaRepository;
-  @Autowired
-  private ProveedorRepository proveedorRepository;
 
-  
-  public List<Video> getVideos() {
+  @Autowired
+  private AccountRepository cuentaRepository;
+
+  @Autowired
+  private ProviderRepository proveedorRepository;
+
+  public List<Video> getAllVideos() {
     List<Video> videos = new LinkedList<>();
-
     videoRepository.findAll().iterator().forEachRemaining(videos::add);
-
     return videos;
   }
 
-  public Video getVideo(VideoLlave id) {
-    Optional<Video> videoEncontrada = videoRepository.findById(id);
-
-    if (!videoEncontrada.isPresent()) {
-      throw new NotFoundException();
+  public List<Video> getVideosByUserId(Integer userId) throws NotFoundException{
+    List<Video> videoList = new LinkedList<>();
+    if(!existUser(userId)) {
+      throw new NotFoundException("No se encontró la cuenta con id " +userId);
     }
 
-    return videoEncontrada.get();
+    videoList = videoRepository.findByUserId(userId);
+    return videoList;
   }
 
-  public List<Video> getVideoByIdCuenta(Integer cuentaId) {
+  /*public List<Video> getVideosByProviderId(Integer providerId) {
     List<Video> videos = new LinkedList<>();
 
-    videos = videoRepository.findByCuentaId(cuentaId);
-
+    videos = videoRepository.findByProviderId(providerId);
     return videos;
-  }
+  }*/
 
-  public List<Video> getVideoByIdProveedor(Integer proveedorId) {
-    List<Video> videos = new LinkedList<>();
-
-    videos = videoRepository.findByProveedorId(proveedorId);
-
-    return videos;
+  /*---------------------------------------------Nivel usuario común------------------------------------*/
+  public List<Video> getUserVideos() {
+    User authenticatedUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    List<Video> foundVideos = videoRepository.findByUserId(authenticatedUser.getId());
+    return foundVideos;
   }
 
   @Transactional
-  public Video crearVideo(VideoRequest request, MultipartFile file) throws IOException{
-    String fileName= StringUtils.cleanPath(file.getOriginalFilename());
-
+  public Video crearVideo(String title, String description, MultipartFile file) throws IOException {
+    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
     Video video = new Video();
-
-    Cuenta cuenta = this.cuentaExist(request.getId().getIdCuenta());
-    Proveedor proveedor = this.proveedorExist(request.getId().getIdProveedor());
-
-    video.setId(request.getId());
-    video.setCuenta(cuenta);
-    video.setProveedor(proveedor);
-    //video.setHoras(request.getHoras());
-    video.setFileVideo(fileName);
+    User authenticatedUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    video.setUser(authenticatedUser);
+    video.setTitle(title);
+    video.setDescription(description);
+    video.setFileUrl(fileName);
     video = videoRepository.save(video);
 
-    String uploadDir= "./video/"+ video.getId();
+    String uploadDir = "./video/" + video.getId();
 
-    Path uploadPath= Paths.get(uploadDir);
-    if(!Files.exists(uploadPath)){
+    Path uploadPath = Paths.get(uploadDir);
+    if (!Files.exists(uploadPath)) {
       Files.createDirectories(uploadPath);
 
     }
-    try(InputStream inputStream= file.getInputStream()){
-      
-    Path filePath= uploadPath.resolve(fileName);
-    Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+    try (InputStream inputStream = file.getInputStream()) {
 
-    }catch(IOException exception){
+      Path filePath = uploadPath.resolve(fileName);
+      Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+    } catch (IOException exception) {
       throw new IOException("No se pudo guardar el archivo" + fileName);
     }
 
     return video;
   }
 
-  private Cuenta cuentaExist(Integer cuentaId) {
-    Optional<Cuenta> cuentaExist = cuentaRepository.findById(cuentaId);
-
-    if(!cuentaExist.isPresent()) {
-      throw new NotFoundException("El cuenta no pudo ser encontrado");
-    }
-
-    return cuentaExist.get();
-  }
-
-  private Proveedor proveedorExist(Integer proveedorId) {
-    Optional<Proveedor> proveedorExist = proveedorRepository.findById(proveedorId);
-
-    if(!proveedorExist.isPresent()) {
-      throw new NotFoundException("El proveedor no pudo ser encontrado");
-    }
-
-    return proveedorExist.get();
-  }
-
   @Transactional
-  public void eliminarVideo(VideoLlave id) {
-    Video videoEliminada = getVideo(id);
-
-    videoRepository.delete(videoEliminada);
+  public Video actualizarVideo(Integer id, VideoRequest request) throws NoSuchElementException{
+    Video video = videoRepository.findById(id).get();
+    video.setTitle(request.getTitle());
+    video.setDescription(request.getDescription());
+    videoRepository.save(video);
+    return video;
+  }
+  
+  @Transactional
+  public void eliminarVideo(Integer id) throws NoSuchElementException{
+    Video video = videoRepository.findById(id).get();
+    videoRepository.delete(video);
   }
 
-  @Transactional
-  public Video actualizarVideo(VideoLlave id, VideoRequest request) {
-    Video videoEncontrada = getVideo(id);
+  private Boolean existUser(Integer userId) {
+    return cuentaRepository.findById(userId).isPresent();
+  }
 
-    //videoEncontrada.setHoras(request.getHoras());
-    videoRepository.save(videoEncontrada);
-
-    return videoEncontrada;
+  private Boolean existProvider(Integer proveedorId) {
+    return proveedorRepository.findById(proveedorId).isPresent();
   }
 }

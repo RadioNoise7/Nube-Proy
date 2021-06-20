@@ -6,23 +6,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cloud.model.Comentario;
-import com.cloud.repository.ComentarioRepository;
+import com.cloud.model.Commentary;
+import com.cloud.repository.CommentaryRepository;
 
 @Service
-public class ComentarioService {
+public class CommentaryService {
 
     @Autowired
-    private ComentarioRepository comentarioRepository;
+    private CommentaryRepository comentarioRepository;
 
     /**
     * Este es el metodo que devuelve los comentarios
     * @return comentarios
     *
     */
-    public List<Comentario> getComentarios() {
+    public List<Commentary> getComentarios() {
 
-        List<Comentario> comentarios = new LinkedList<>();
+        List<Commentary> comentarios = new LinkedList<>();
         comentarioRepository.findAll().iterator().forEachRemaining(comentarios::add);
 
         return comentarios;
@@ -34,7 +34,7 @@ public class ComentarioService {
     * @return void
     *
     */
-    public Comentario getComentario(Integer id) {
+    public Commentary getComentario(Integer id) {
         return comentarioRepository.findById(id).get();
     }
 }

@@ -2,26 +2,19 @@ package com.cloud.model.Request;
 
 import javax.validation.constraints.NotBlank;
 
-import java.io.Serializable;
-
-
-public class AuthRequest implements Serializable {
-
-    private static final long serialVersionUID = 5926468583005150707L;
+public class LoginRequest {
 
     @NotBlank
     private String username;
 
     @NotBlank
     private String password;
-    
 
     public String getUsername() {
         return username;
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
-
 }
