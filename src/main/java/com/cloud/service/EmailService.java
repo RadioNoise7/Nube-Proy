@@ -47,12 +47,7 @@ public class EmailService {
             mailSender.send(mailMessage);
             result="Correo enviado";
         } catch(NullPointerException nullEx) {
-            result = "Entró en la excepción!";
-            System.out.println(nullEx.getMessage());
-            System.out.println(host);
-            System.out.println(port);
-            System.out.println(username);
-            System.out.println(password);
+            throw new NullPointerException("Uno o mas de los campos en el email son nulos.");
         }
 
         return result;

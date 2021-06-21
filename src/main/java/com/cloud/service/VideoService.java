@@ -11,18 +11,15 @@ import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import com.cloud.exception.NotFoundException;
-import com.cloud.model.Provider;
 import com.cloud.model.User;
 import com.cloud.model.Video;
 
 import com.cloud.model.Request.VideoRequest;
 import com.cloud.repository.AccountRepository;
-import com.cloud.repository.ProviderRepository;
 import com.cloud.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,9 +34,6 @@ public class VideoService {
 
   @Autowired
   private AccountRepository cuentaRepository;
-
-  @Autowired
-  private ProviderRepository proveedorRepository;
 
   public List<Video> getAllVideos() {
     List<Video> videos = new LinkedList<>();
@@ -73,29 +67,26 @@ public class VideoService {
 
   @Transactional
   public Video crearVideo(String title, String description, MultipartFile file) throws IOException {
-    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-    Video video = new Video();
     User authenticatedUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    video.setUser(authenticatedUser);
-    video.setTitle(title);
-    video.setDescription(description);
-    video.setFileUrl(fileName);
-    video = videoRepository.save(video);
-
-    String uploadDir = "./video/" + video.getId();
+    String fileName = System.currentTimeMillis() +"_" +StringUtils.cleanPath(file.getOriginalFilename());
+    String uploadDir = "./video/" +authenticatedUser.getId();
+    Video video = new Video();
 
     Path uploadPath = Paths.get(uploadDir);
     if (!Files.exists(uploadPath)) {
       Files.createDirectories(uploadPath);
-
     }
-    try (InputStream inputStream = file.getInputStream()) {
 
+    try (InputStream inputStream = file.getInputStream()) {
       Path filePath = uploadPath.resolve(fileName);
       Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-
+      video.setUser(authenticatedUser);
+      video.setTitle(title);
+      video.setDescription(description);
+      video.setFileUrl("/video/" +authenticatedUser.getId() +"/" +fileName);
+      video = videoRepository.save(video);
     } catch (IOException exception) {
-      throw new IOException("No se pudo guardar el archivo" + fileName);
+      throw new IOException("No se pudo guardar el archivo: " + fileName);
     }
 
     return video;
@@ -120,7 +111,7 @@ public class VideoService {
     return cuentaRepository.findById(userId).isPresent();
   }
 
-  private Boolean existProvider(Integer proveedorId) {
+  /*private Boolean existProvider(Integer proveedorId) {
     return proveedorRepository.findById(proveedorId).isPresent();
-  }
+  }*/
 }

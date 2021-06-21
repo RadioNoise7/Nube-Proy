@@ -2,6 +2,7 @@ package com.cloud.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.exception.NotFoundException;
-import com.cloud.model.Account;
 import com.cloud.model.Role;
 import com.cloud.model.User;
 import com.cloud.model.Request.RegisterRequest;
-import com.cloud.repository.AccountRepository;
 import com.cloud.repository.RoleRepository;
 import com.cloud.repository.UserRepository;
 
@@ -26,7 +25,7 @@ public class UserService {
     private UserRepository usuarioRepository;
 
     @Autowired
-    private AccountRepository cuentaRepository;
+    private AccountService accountService;
 
     @Autowired
     private ProviderService providerService;
@@ -42,7 +41,9 @@ public class UserService {
     
     @Transactional
     public List<User> getUsers() {
-        return usuarioRepository.findAll();
+        List<User> users = new LinkedList<>();
+        usuarioRepository.findAll().iterator().forEachRemaining(users::add);
+        return users;
     }
 
     public User getUserById(Integer id) {
@@ -72,13 +73,8 @@ public class UserService {
         registeredUser.setEmail(request.getEmail());
         registeredUser.setRole(role);
         registeredUser = usuarioRepository.save(registeredUser);
-
-        Account newAccount = new Account();
-        newAccount.setUser(registeredUser);
-        newAccount.setProvider(providerService.getProviderById(DEFAULT_PROVIDER_ID));
-        newAccount.setAccountname(request.getAccountname());
-        newAccount = cuentaRepository.save(newAccount);
-
+       
+        accountService.createAccount(registeredUser, providerService.getProviderById(DEFAULT_PROVIDER_ID), request.getAccountname());
         return registeredUser;
     }
 

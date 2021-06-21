@@ -1,5 +1,7 @@
 package com.cloud.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,23 +12,20 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 @Table(name = "accounts")
-public class Account {
+public class Account implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name="user_id", insertable = false, updatable = false)
+    @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
-    @JsonBackReference
     private Provider provider;
 
     @NotBlank

@@ -1,5 +1,7 @@
 package com.cloud.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -10,21 +12,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "videos")
-public class Video {
+public class Video implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @ManyToOne
-  @JoinColumn(name="user_id", insertable = false, updatable = false)
-  @JsonBackReference
+  @JoinColumn(name="user_id")
   private User user;
 
   @NotBlank
@@ -77,12 +78,12 @@ public class Video {
 
   @Transient
   public String getVideoPath() {
-    if(fileUrl==null || id==null)return null;
-    return "/video/"+ id +"/"+fileUrl; 
+    if(fileUrl==null)return null;
+    return fileUrl; 
   }
 
   @Override
   public String toString() {
-    return ( "{" + this.getUser() + "," + this.getTitle() + "," + this.getDescription() + "}");
+    return ( "{" + this.getUser() + "," + this.getTitle() + "," + this.getDescription() + "," +this.getFileUrl() +"}");
   }
 }

@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cloud.exception.NotFoundException;
 import com.cloud.model.Account;
+import com.cloud.model.Provider;
+import com.cloud.model.User;
 import com.cloud.model.Request.AccountRequest;
 import com.cloud.repository.AccountRepository;
 
@@ -17,13 +19,13 @@ import com.cloud.repository.AccountRepository;
 public class AccountService {
 
     @Autowired
-    private AccountRepository cuentaRepository;
+    private AccountRepository accountRepository;
 
     public List<Account> getCuentas() {
 
         List<Account> cuentas = new LinkedList<>();
 
-        cuentaRepository.findAll().iterator().forEachRemaining(cuentas::add); // SELECT(id, nombre)
+        accountRepository.findAll().iterator().forEachRemaining(cuentas::add); // SELECT(id, nombre)
 
         return cuentas;
     }
@@ -36,7 +38,7 @@ public class AccountService {
      *
      */
     public Account getCuenta(Integer id) {
-        Optional<Account> cuenta = cuentaRepository.findById(id);
+        Optional<Account> cuenta = accountRepository.findById(id);
 
         if (!cuenta.isPresent()) {
             throw new NotFoundException();
@@ -53,7 +55,7 @@ public class AccountService {
      *
      */
     public List<Account> getAccountByAccountname(String accountname) {
-        return cuentaRepository.findByAccountname(accountname);
+        return accountRepository.findByAccountname(accountname);
     }
 
     /**
@@ -63,6 +65,15 @@ public class AccountService {
      * @return cuenta
      *
      */
+    @Transactional
+    public Account createAccount(User user, Provider provider, String accountname){
+        Account account = new Account();
+        account.setUser(user);
+        account.setProvider(provider);
+        account.setAccountname(accountname);
+        return account;
+    }
+    
     /*
      * @Transactional public Account crearCuenta(CuentaRequest request) {
      * 
@@ -91,7 +102,7 @@ public class AccountService {
         Account foundAccount = getCuenta(id);
         foundAccount.setAccountname(request.getNombre());
         // cuentaEncontrado.setComentario();
-        cuentaRepository.save(foundAccount);
+        accountRepository.save(foundAccount);
         return foundAccount;
     }
 
@@ -104,7 +115,7 @@ public class AccountService {
      */
     @Transactional
     public void eliminarCuenta(Integer id) {
-        cuentaRepository.deleteById(id);
+        accountRepository.deleteById(id);
     }
 
 }

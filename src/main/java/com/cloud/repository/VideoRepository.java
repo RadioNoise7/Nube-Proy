@@ -12,8 +12,8 @@ import com.cloud.model.Video;
 @Repository
 public interface VideoRepository extends CrudRepository<Video, Integer> {
 
-  public Optional<Video>findById(Integer id);
-  public List<Video> findByUserId(Integer user_id);
-  /*public List<Video> findByProviderId(Integer provider_id);*/
+  Optional<Video>findById(Integer id);
+  List<Video> findByUserId(Integer userId);
+  /*List<Video> findByProviderId(Integer provider_id);*/
 
 }
