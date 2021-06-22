@@ -1,7 +1,5 @@
 package com.cloud.service;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -17,8 +15,7 @@ import javax.transaction.Transactional;
 import com.cloud.exception.NotFoundException;
 import com.cloud.model.User;
 import com.cloud.model.Video;
-
-import com.cloud.model.Request.VideoRequest;
+import com.cloud.model.request.VideoRequest;
 import com.cloud.repository.AccountRepository;
 import com.cloud.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +31,9 @@ public class VideoService {
 
   @Autowired
   private AccountRepository cuentaRepository;
+
+  @Autowired
+  private AuthService authService;
 
   public List<Video> getAllVideos() {
     List<Video> videos = new LinkedList<>();
@@ -60,14 +60,14 @@ public class VideoService {
 
   /*---------------------------------------------Nivel usuario común------------------------------------*/
   public List<Video> getUserVideos() {
-    User authenticatedUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User authenticatedUser = authService.getAuthUser();
     List<Video> foundVideos = videoRepository.findByUserId(authenticatedUser.getId());
     return foundVideos;
   }
 
   @Transactional
   public Video crearVideo(String title, String description, MultipartFile file) throws IOException {
-    User authenticatedUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User authenticatedUser = authService.getAuthUser();
     String fileName = System.currentTimeMillis() +"_" +StringUtils.cleanPath(file.getOriginalFilename());
     String uploadDir = "./video/" +authenticatedUser.getId();
     Video video = new Video();

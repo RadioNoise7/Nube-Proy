@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.model.Provider;
-import com.cloud.model.Request.ProviderRequest;
+import com.cloud.model.request.ProviderRequest;
 import com.cloud.repository.ProviderRepository;
 
 @Service

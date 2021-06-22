@@ -6,8 +6,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import com.cloud.model.Video;
-
-import com.cloud.model.Request.VideoRequest;
+import com.cloud.model.request.VideoRequest;
 import com.cloud.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

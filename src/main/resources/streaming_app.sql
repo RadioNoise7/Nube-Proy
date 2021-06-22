@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 21-06-2021 a las 04:52:30
+-- Tiempo de generación: 22-06-2021 a las 09:58:31
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 7.4.6
 
@@ -35,6 +35,18 @@ CREATE TABLE `accounts` (
   `user_id` int(11) DEFAULT NULL,
   `provider_id` int(11) NOT NULL,
   `accountname` varchar(125) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `blacklist_tokens`
+--
+
+DROP TABLE IF EXISTS `blacklist_tokens`;
+CREATE TABLE `blacklist_tokens` (
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -151,6 +163,12 @@ ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK93qbfcrq4wv77c75qj4r6q5us` (`provider_id`),
   ADD KEY `FKnjuop33mo69pd79ctplkck40n` (`user_id`);
+
+--
+-- Indices de la tabla `blacklist_tokens`
+--
+ALTER TABLE `blacklist_tokens`
+  ADD UNIQUE KEY `token` (`token`);
 
 --
 -- Indices de la tabla `commentaries`

@@ -25,14 +25,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
 	@Autowired
-	private UserDetailsService jwtUserDetailsService;
-
-	@Autowired
-	private JwtRequestFilter jwtRequestFilter;
+	private UserDetailsService userDetailsService;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -46,14 +43,26 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
+	@Bean
+  	public JwtRequestFilter jwtRequestFilterBean() throws Exception {
+		JwtRequestFilter jwtRequestFilter = new JwtRequestFilter();
+		return jwtRequestFilter;
+ 	 }
+
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().disable()
-				.authorizeRequests().antMatchers(HttpMethod.POST, "/login", "/register","/logout/**").permitAll()
-				.anyRequest().authenticated().and().
-				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		httpSecurity
+		.csrf().disable().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+		.and()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.authorizeRequests()
+		.antMatchers(HttpMethod.POST,"/auth/logout").permitAll()
+		.antMatchers(HttpMethod.POST,"/auth/login").permitAll()
+		.antMatchers(HttpMethod.POST,"/auth/register").permitAll()
+		.anyRequest().authenticated();
+
+		httpSecurity.addFilterBefore(jwtRequestFilterBean(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 

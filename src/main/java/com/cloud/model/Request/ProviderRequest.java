@@ -1,4 +1,4 @@
-package com.cloud.model.Request;
+package com.cloud.model.request;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;

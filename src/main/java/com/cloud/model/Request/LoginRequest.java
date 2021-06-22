@@ -1,4 +1,4 @@
-package com.cloud.model.Request;
+package com.cloud.model.request;
 
 import javax.validation.constraints.NotBlank;
 

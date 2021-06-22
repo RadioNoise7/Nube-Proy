@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.cloud.exception.NotFoundException;
 import com.cloud.model.Role;
 import com.cloud.model.User;
-import com.cloud.model.Request.RegisterRequest;
+import com.cloud.model.request.RegisterRequest;
 import com.cloud.repository.RoleRepository;
 import com.cloud.repository.UserRepository;
 
@@ -39,7 +39,6 @@ public class UserService {
     private final Integer DEFAULT_PROVIDER_ID = 1;
     private final Integer DEFAULT_ROLE_USER_ID = 2;
     
-    @Transactional
     public List<User> getUsers() {
         List<User> users = new LinkedList<>();
         usuarioRepository.findAll().iterator().forEachRemaining(users::add);

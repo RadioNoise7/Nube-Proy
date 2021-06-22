@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ForbiddenException extends RuntimeException {
 
     public ForbiddenException(){
-        super("La ruta no existe o no fue encontrada");
+        super("Acceso denegado");
     }
 
     public ForbiddenException(String mensaje){
