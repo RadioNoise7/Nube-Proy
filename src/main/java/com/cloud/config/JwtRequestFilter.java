@@ -23,6 +23,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+	private final String[] NON_AUTH_HEADER_URIS = {"/auth/login", "/auth/register"};
+
 	@Autowired
 	private JWTTokenUtil jwtTokenUtil;
 
@@ -40,7 +42,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get
 		// only the Token
 		if (requestTokenHeader == null || requestTokenHeader.isEmpty()){
-			System.out.println("Se necesita el header \"Authorization\" con el token correspondiente");
+			if(!isAPermittedSite(request.getRequestURI()))
+				System.out.println("Se necesita el header \"Authorization\" con el token correspondiente");
+				
 			chain.doFilter(request, response);
 			return;
 		}
@@ -75,4 +79,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		chain.doFilter(request, response);
 	}
 
+	private Boolean isAPermittedSite(String uri){
+		for (String permittedUriElement: NON_AUTH_HEADER_URIS){
+			if(permittedUriElement.equals(uri)) return true;
+		}
+		return false;
+	}
 }
