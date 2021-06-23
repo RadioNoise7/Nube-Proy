@@ -7,20 +7,20 @@ import javax.validation.constraints.Size;
 
 public class RegisterRequest {
 
-    @NotBlank
-    @Size(min = 5, max = 50)
+    @NotBlank(message="Este campo es obligatorio y no puede estar vacío")
+    @Size(min = 5, max = 50, message="El campo debe tener de 5 hasta 50 caracteres")
     private String username;
 
-    @NotBlank
-    @Pattern(regexp="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&*]).{8,}$", message="La contrasea debe tener al menos 8 caracteres, una letra, un numero y un simbolo especial")
+    @NotBlank(message="Este campo es obligatorio y no puede estar vacío")
+    @Pattern(regexp="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&*]).{8,}$", message="El campo debe tener al menos 8 caracteres, una letra, un numero y un simbolo especial")
     private String password;
 
-    @NotBlank
-    @Size(min = 5, max = 255)
+    @NotBlank(message="Este campo es obligatorio y no puede estar vacío")
+    @Size(min = 5, max = 255, message="El campo debe tener de 5 hasta 255 caracteres")
     private String accountname;
 
-    @NotBlank
-    @Email
+    @NotBlank(message="Este campo es obligatorio y no puede estar vacío")
+    @Email(message="Debe ser un correo válido")
     private String email;
     
 

@@ -10,10 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -26,29 +22,21 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotBlank
     private String username;
 
     @JsonIgnore
-    @NotBlank
-    @Pattern(regexp="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&*]).{8,}$", message="La contrasea debe tener al menos 8 caracteres, una letra, un numero y un simbolo especial")
     private String password;
 
-    @NotBlank
-    @Email
     private String email;
 
     @OneToOne
     @JoinColumn(name = "role_id")
-    @NotBlank
     private Role role;
 
     @JsonIgnore
     private String token;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User id(Integer id) {
         this.id = id;

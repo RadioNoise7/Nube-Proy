@@ -10,7 +10,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     
     public User findByUsername(String username);
 
-    // SELECT * FROM usuarios where token = 'token';
-    public User findByToken(String token);
+    public User findByEmail(String email);
 
 }

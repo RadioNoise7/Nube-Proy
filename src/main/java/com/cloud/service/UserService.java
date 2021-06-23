@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cloud.exception.ConflictException;
 import com.cloud.exception.NotFoundException;
 import com.cloud.model.Role;
 import com.cloud.model.User;
@@ -58,11 +59,17 @@ public class UserService {
     }
 
     @Transactional
-    public User create(RegisterRequest request) {
+    public User create(RegisterRequest request) throws ConflictException {
         /*
             Temporalmente asignamos por defecto nuestro proveedor como primera
             cuenta y el tipo de rol "Usuario".
         */
+        if(existUsername(request.getUsername())){
+            throw new ConflictException("El username " +request.getUsername() +" ya se encuentra en los registros.");
+        }
+        if(existEmail(request.getEmail())){
+            throw new ConflictException("El email "+request.getEmail() +" ya se encuentra en los registros.");
+        }
 
         Role role = roleRepository.findById(DEFAULT_ROLE_USER_ID).get();
 
@@ -75,6 +82,20 @@ public class UserService {
        
         accountService.createAccount(registeredUser, providerService.getProviderById(DEFAULT_PROVIDER_ID), request.getAccountname());
         return registeredUser;
+    }
+
+    /**
+     * Comprueba si un usuario existe
+     * @param username El nombre de usuario a buscar.
+     * @return <code>True</code> si existe el usuario, <code>False</code> en caso contrario.
+     */
+    private Boolean existUsername(String username){
+        return usuarioRepository.findByUsername(username)!=null;
+    }
+
+    
+    private Boolean existEmail(String email){
+        return usuarioRepository.findByEmail(email)!=null;
     }
 
 }
