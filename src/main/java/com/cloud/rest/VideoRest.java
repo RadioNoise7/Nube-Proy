@@ -15,7 +15,9 @@ import com.cloud.service.VideoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -74,12 +76,25 @@ public class VideoRest {
   }
 
   @GetMapping("/videos/{id}/completo")
-  public ResponseEntity<UrlResource> getVideo(@PathVariable Integer id) throws MalformedURLException {
+  public ResponseEntity<UrlResource> getFullVideo(@PathVariable Integer id) throws MalformedURLException {
       UrlResource video = videoService.getVideoResource(id);
 
       return ResponseEntity.status(HttpStatus.OK)
               .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM)) // Content-Type:
               .body(video);                                                                                 // application/video-mp4 default => application/octet-stream
+  }
+
+  
+  @GetMapping("/videos/{videoId}")
+  public ResponseEntity<ResourceRegion> getVideoByParts(@PathVariable Integer videoId,
+  @RequestHeader HttpHeaders headers) throws MalformedURLException {
+    
+      UrlResource videoResource = videoService.getVideoResource(videoId);
+      ResourceRegion videoRegion = videoService.getVideoResourceInParts(videoResource, headers);
+
+      return ResponseEntity.status(HttpStatus.OK)
+              .contentType(MediaTypeFactory.getMediaType(videoResource).orElse(MediaType.APPLICATION_OCTET_STREAM)) // Content-Type:
+              .body(videoRegion);                                                                                 // application/video-mp4 default => application/octet-stream
   }
 
   @PutMapping("/videos/{videoId}")

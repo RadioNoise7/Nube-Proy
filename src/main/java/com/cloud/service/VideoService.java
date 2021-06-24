@@ -20,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.support.ResourceRegion;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +37,9 @@ public class VideoService {
 
   @Autowired
   private AuthService authService;
+
+  private static final long KByte = 1024;
+  private static final long MByte = 1024*1024;
 
   public List<Video> getAllVideos() {
     List<Video> videos = new LinkedList<>();
@@ -90,6 +96,24 @@ public class VideoService {
     String ubicacion = video.getFileUrl();
     return new UrlResource("file:" + ubicacion);
   }
+
+  public ResourceRegion getVideoResourceInParts(UrlResource urlResource, HttpHeaders httpHeaders) 
+    throws MalformedURLException {
+      long videoLength = 0;
+      try {videoLength = urlResource.contentLength();}
+      catch(IOException ex){System.out.println("Ocurrió un error al obtener el recurso");}
+      HttpRange httpRange = httpHeaders.getRange().size() != 0 ? httpHeaders.getRange().get(0) : null;
+  
+      if(httpRange == null)  {
+          long step = Math.min(KByte, videoLength); // los primero 1024 Bytes
+          return new ResourceRegion(urlResource, 0, step); // 0 + paso 
+      }
+  
+      long start = httpRange.getRangeStart(videoLength);
+      long end = httpRange.getRangeEnd(videoLength);
+      long step = Math.min(MByte, end - start + 1); // limitar el maximo a 1 MB
+      return new ResourceRegion(urlResource, start, step); // inicio + paso
+    }
 
   @Transactional
   public Video updateVideo(Integer id, VideoRequest request) throws NoSuchElementException {
