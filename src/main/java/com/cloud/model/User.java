@@ -1,7 +1,9 @@
 package com.cloud.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +36,8 @@ public class User implements Serializable{
     private Role role;
 
     @JsonIgnore
-    private String token;
+    @Column(name="token_at")
+    private Timestamp tokenAt;
 
     public User() {}
 
@@ -89,15 +92,15 @@ public class User implements Serializable{
     /**
      * @param token the token to set
      */
-    public void setToken(String token) {
-        this.token = token;
+    public void setTokenAt(Timestamp tokenAt) {
+        this.tokenAt = tokenAt;
     }
 
     /**
      * @return the token
      */
-    public String getToken() {
-        return token;
+    public Timestamp getTokenAt() {
+        return tokenAt;
     }
 
     public void setRole(Role role){

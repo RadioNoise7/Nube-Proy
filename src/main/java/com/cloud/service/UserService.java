@@ -2,6 +2,7 @@ package com.cloud.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ import com.cloud.repository.UserRepository;
 public class UserService {
 
     @Autowired
-    private UserRepository usuarioRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private AccountService accountService;
@@ -42,20 +43,22 @@ public class UserService {
     
     public List<User> getUsers() {
         List<User> users = new LinkedList<>();
-        usuarioRepository.findAll().iterator().forEachRemaining(users::add);
+        userRepository.findAll().iterator().forEachRemaining(users::add);
         return users;
     }
 
     public User getUserById(Integer id) {
-        Optional<User> opt = usuarioRepository.findById(id);
-        if (opt.isPresent()) {
-            return opt.get();
-        }
-        throw new NotFoundException("No se encontró un usuario con id " +id);
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent())
+            throw new NotFoundException("No se encontró un usuario con id " +id);
+        return user.get();
     }
 
     public User getUserByUsername(String username){
-        return usuarioRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
+        if (!user.isPresent())
+            throw new NotFoundException("No se encontró un usuario con username " +username);
+        return user.get();
     }
 
     @Transactional
@@ -78,10 +81,33 @@ public class UserService {
         registeredUser.setPassword(passwordEncoder.encode(request.getPassword()));
         registeredUser.setEmail(request.getEmail());
         registeredUser.setRole(role);
-        registeredUser = usuarioRepository.save(registeredUser);
+        registeredUser = userRepository.save(registeredUser);
        
         accountService.createAccount(registeredUser, providerService.getProviderById(DEFAULT_PROVIDER_ID), request.getAccountname());
         return registeredUser;
+    }
+
+    public void updateUser(String username){
+
+    }
+
+    public void updateTokenAt(String username, Timestamp timeS){
+        User user = getUserByUsername(username);
+        user.setTokenAt(timeS);
+        userRepository.save(user);
+    }
+
+    /**
+     * Nos permite saber si el token de acceso se creó con un tiempo mayor a la validez del token
+     * @param username - el username del usuario de quien obtendremos el token 
+     * @return <code>True</code> en caso de que sea mayor a la duración de validez de un token, o
+     * el campo sea <code>Null</code>. <code>False</code> de otro modo.
+     */
+    public Boolean isTokenOldGenerated(String username, Integer hours){
+        Timestamp tokenGeneratedTime = getUserByUsername(username).getTokenAt();
+        if(tokenGeneratedTime == null) return false;
+        Long msGeneratedTime = tokenGeneratedTime.getTime();
+        return hoursDiference( System.currentTimeMillis(), msGeneratedTime) < hours;
     }
 
     /**
@@ -90,12 +116,17 @@ public class UserService {
      * @return <code>True</code> si existe el usuario, <code>False</code> en caso contrario.
      */
     private Boolean existUsername(String username){
-        return usuarioRepository.findByUsername(username)!=null;
+        return userRepository.findByUsername(username)!=null;
     }
 
     
     private Boolean existEmail(String email){
-        return usuarioRepository.findByEmail(email)!=null;
+        return userRepository.findByEmail(email)!=null;
     }
 
+    private Long hoursDiference(Long time1, Long time2){
+        time1 = (time1/(1000*60*60));//Obetenemos las horas del timestamp
+        time2 = (time2/(1000*60*60));//Obetenemos las horas del timestamp
+        return Math.abs(time2-time1);
+    }
 }

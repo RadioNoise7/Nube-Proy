@@ -1,5 +1,6 @@
 package com.cloud.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import com.cloud.config.JWTTokenUtil;
 import com.cloud.config.JwtTokenBlacklist;
-//import com.cloud.exception.CurrentlyLoggedInException;
+import com.cloud.exception.CurrentlyLoggedInException;
 import com.cloud.model.User;
 import com.cloud.model.request.LoginRequest;
 import com.cloud.model.request.RegisterRequest;
@@ -67,21 +68,21 @@ public class AuthService implements UserDetailsService{
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String generatedToken;
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
 
-        if (userDetails.isAccountNonExpired() && userDetails.isCredentialsNonExpired()) {
-            //throw new CurrentlyLoggedInException();
+        if (userService.isTokenOldGenerated(userDetails.getUsername(), 5)) {
+            throw new CurrentlyLoggedInException("Ya existe una sesión activa");
         }
-        generatedToken = jwtTokenUtil.generateToken(userDetails);
         // emailService.sendEmail("Se ha iniciado sesion desde: " +userAgent,
         // user.getEmail(), "Inicio de sesión");
-        return generatedToken;
+        userService.updateTokenAt(request.getUsername(), new Timestamp(System.currentTimeMillis()));
+        return jwtTokenUtil.generateToken(userDetails);
     }
 
     @Transactional
     public void logout(String token) throws DataAccessException {
-        SecurityContextHolder.clearContext();
+        User user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        userService.updateTokenAt(user.getUsername(), null);
         tokenBlackList.addTokenToBlacklist(token);
     }
 }
