@@ -93,7 +93,9 @@ public class VideoService {
 
   @Transactional
   public Video updateVideo(Integer id, VideoRequest request) throws NoSuchElementException {
-    Video video = videoRepository.findById(id).get();
+    Optional<Video> videoFound = videoRepository.findById(id);
+    if (!videoFound.isPresent()) throw new NotFoundException("El video con id " + id + " no existe");
+    Video video = videoFound.get();
     video.setTitle(request.getTitle());
     video.setDescription(request.getDescription());
     videoRepository.save(video);
@@ -102,8 +104,13 @@ public class VideoService {
 
   @Transactional
   public void deleteVideo(Integer id) throws NoSuchElementException {
-    Video video = videoRepository.findById(id).get();
+    Optional<Video> videoFound = videoRepository.findById(id);
+    if (!videoFound.isPresent()) throw new NotFoundException("El video con id " + id + " no existe");
+    Video video = videoFound.get();
     videoRepository.delete(video);
+    FileManagerService fileMS = new FileManagerService();
+    try{fileMS.deleteFile(video.getFileUrl());}
+    catch(IOException ex){System.out.println("Error al eliminar el archivo del directorio");}
   }
 
   private Boolean existUser(Integer userId) {

@@ -37,8 +37,11 @@ public class FileManagerService {
     }
 
     @Async
-    public void deleteFile(Integer userId, String urlFile){
-
+    public void deleteFile(String dir) throws IOException{
+        Path fileToDeletePath = Paths.get(dir);
+        Path fileParentFolder = fileToDeletePath.getParent();
+        Files.delete(fileToDeletePath);
+        Files.delete(fileParentFolder);
     }
 
     private String filenameExtensionRemover(String filename){
@@ -46,4 +49,5 @@ public class FileManagerService {
         if (lastPeriodPos > 0) return filename.substring(0, lastPeriodPos);
         return filename;
     }
+    
 }
