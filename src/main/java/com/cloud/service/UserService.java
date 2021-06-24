@@ -115,13 +115,15 @@ public class UserService {
      * @param username El nombre de usuario a buscar.
      * @return <code>True</code> si existe el usuario, <code>False</code> en caso contrario.
      */
-    private Boolean existUsername(String username){
-        return userRepository.findByUsername(username)!=null;
+    public Boolean existUsername(String username){
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.isPresent();
     }
 
     
-    private Boolean existEmail(String email){
-        return userRepository.findByEmail(email)!=null;
+    public Boolean existEmail(String email){
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.isPresent();
     }
 
     private Long hoursDiference(Long time1, Long time2){
