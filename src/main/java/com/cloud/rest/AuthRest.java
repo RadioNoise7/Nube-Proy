@@ -1,6 +1,5 @@
 package com.cloud.rest;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -25,10 +24,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.validation.FieldError;
 
 import com.cloud.config.JWTTokenUtil;
 import com.cloud.config.JwtResponse;
+import com.cloud.exception.ValidationExceptionsHandler;
 import com.cloud.model.request.LoginRequest;
 import com.cloud.model.request.RegisterRequest;
 import com.cloud.service.AuthService;
@@ -77,14 +76,9 @@ public class AuthRest {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
+    public Map<String, String> validateExceptions(MethodArgumentNotValidException ex) {
+        ValidationExceptionsHandler exHandler = new ValidationExceptionsHandler(ex);
+        return exHandler.handleValidationExceptions();
     }
 
 }

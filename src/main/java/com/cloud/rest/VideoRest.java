@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cloud.exception.ValidationExceptionsHandler;
 import com.cloud.model.Video;
 import com.cloud.model.request.VideoRequest;
 
@@ -110,13 +111,8 @@ public class VideoRest {
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-      Map<String, String> errors = new HashMap<>();
-      ex.getBindingResult().getAllErrors().forEach((error) -> {
-          String fieldName = ((FieldError) error).getField();
-          String errorMessage = error.getDefaultMessage();
-          errors.put(fieldName, errorMessage);
-      });
-      return errors;
+  public Map<String, String> validateExceptions(MethodArgumentNotValidException ex) {
+    ValidationExceptionsHandler exHandler = new ValidationExceptionsHandler(ex);
+    return exHandler.handleValidationExceptions();
   }
 }
