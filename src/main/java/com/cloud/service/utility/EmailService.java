@@ -1,4 +1,4 @@
-package com.cloud.service;
+package com.cloud.service.utility;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

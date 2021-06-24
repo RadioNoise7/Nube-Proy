@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.annotation.Transient;
 
@@ -26,9 +28,9 @@ public class Video implements Serializable {
 
   @ManyToOne
   @JoinColumn(name="user_id")
+  @JsonBackReference
   private User user;
 
-  @NotBlank
   private String title;
 
   private String description;

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 
-import org.springframework.web.bind.annotation.RestController;
 
 //JWT
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +32,7 @@ import com.cloud.config.JwtResponse;
 import com.cloud.model.request.LoginRequest;
 import com.cloud.model.request.RegisterRequest;
 import com.cloud.service.AuthService;
-import com.cloud.service.EmailService;
+import com.cloud.service.utility.EmailService;
 
 @RestController
 @RequestMapping("/auth")
@@ -77,15 +77,14 @@ public class AuthRest {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-    MethodArgumentNotValidException ex) {
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
-    });
-    return errors;
-}
+        });
+        return errors;
+    }
 
 }

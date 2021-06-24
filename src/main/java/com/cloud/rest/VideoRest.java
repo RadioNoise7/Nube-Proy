@@ -1,17 +1,30 @@
 package com.cloud.rest;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.cloud.model.Video;
 import com.cloud.model.request.VideoRequest;
+
 import com.cloud.service.VideoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,22 +66,43 @@ public class VideoRest {
     return ResponseEntity.ok().body(videos);
   }
 
-  @PostMapping("/videos")
-  public ResponseEntity<Video> postVideos(@RequestHeader String title, @RequestHeader String description, @RequestParam("file") MultipartFile file) throws URISyntaxException, IOException {
-    Video videosCreada = videoService.crearVideo(title, description, file);
+  @PostMapping(value= "/videos", consumes= {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+  public ResponseEntity<Video> postVideos(@RequestPart String video, @RequestPart("file") MultipartFile file) throws URISyntaxException, IOException {
+    Video videosCreada = videoService.crearVideo(video, file);
 
     return ResponseEntity.created(new URI("/videos/" + videosCreada.getId())).body(videosCreada);
   }
 
+  @GetMapping("/videos/{id}/completo")
+  public ResponseEntity<UrlResource> getVideo(@PathVariable Integer id) throws MalformedURLException {
+      UrlResource video = videoService.getVideoResource(id);
+
+      return ResponseEntity.status(HttpStatus.OK)
+              .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM)) // Content-Type:
+              .body(video);                                                                                 // application/video-mp4 default => application/octet-stream
+  }
+
   @PutMapping("/videos/{videoId}")
   public ResponseEntity<Video> putVideos(@PathVariable("videoId") Integer videoId, @RequestBody @Validated VideoRequest request) {
-    Video updatedVideo = videoService.actualizarVideo(videoId, request);
+    Video updatedVideo = videoService.updateVideo(videoId, request);
     return ResponseEntity.ok().body(updatedVideo);
   }
 
   @DeleteMapping("/videos/{videoId}")
   public ResponseEntity<Void> deleteVideos(@PathVariable("videoId") Integer videoId) {
-    videoService.eliminarVideo(videoId);
+    videoService.deleteVideo(videoId);
     return ResponseEntity.ok().build();
+  }
+
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+      Map<String, String> errors = new HashMap<>();
+      ex.getBindingResult().getAllErrors().forEach((error) -> {
+          String fieldName = ((FieldError) error).getField();
+          String errorMessage = error.getDefaultMessage();
+          errors.put(fieldName, errorMessage);
+      });
+      return errors;
   }
 }

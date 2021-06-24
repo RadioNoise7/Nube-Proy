@@ -1,14 +1,11 @@
 package com.cloud.service;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -18,9 +15,12 @@ import com.cloud.model.Video;
 import com.cloud.model.request.VideoRequest;
 import com.cloud.repository.AccountRepository;
 import com.cloud.repository.VideoRepository;
+import com.cloud.service.utility.FileManagerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -41,22 +41,22 @@ public class VideoService {
     return videos;
   }
 
-  public List<Video> getVideosByUserId(Integer userId) throws NotFoundException{
+  public List<Video> getVideosByUserId(Integer userId) throws NotFoundException {
     List<Video> videoList = new LinkedList<>();
-    if(!existUser(userId)) {
-      throw new NotFoundException("No se encontró la cuenta con id " +userId);
+    if (!existUser(userId)) {
+      throw new NotFoundException("No se encontró la cuenta con id " + userId);
     }
 
     videoList = videoRepository.findByUserId(userId);
     return videoList;
   }
 
-  /*public List<Video> getVideosByProviderId(Integer providerId) {
-    List<Video> videos = new LinkedList<>();
-
-    videos = videoRepository.findByProviderId(providerId);
-    return videos;
-  }*/
+  /*
+   * public List<Video> getVideosByProviderId(Integer providerId) { List<Video>
+   * videos = new LinkedList<>();
+   * 
+   * videos = videoRepository.findByProviderId(providerId); return videos; }
+   */
 
   /*---------------------------------------------Nivel usuario común------------------------------------*/
   public List<Video> getUserVideos() {
@@ -66,43 +66,42 @@ public class VideoService {
   }
 
   @Transactional
-  public Video crearVideo(String title, String description, MultipartFile file) throws IOException {
+  public Video crearVideo(String videoJson, MultipartFile file) throws IOException, NotFoundException {
+    ObjectMapper om = new ObjectMapper();
+    VideoRequest request = om.readValue(videoJson, VideoRequest.class);
+
     User authenticatedUser = authService.getAuthUser();
-    String fileName = System.currentTimeMillis() +"_" +StringUtils.cleanPath(file.getOriginalFilename());
-    String uploadDir = "./video/" +authenticatedUser.getId();
     Video video = new Video();
+    FileManagerService fileMS = new FileManagerService();
 
-    Path uploadPath = Paths.get(uploadDir);
-    if (!Files.exists(uploadPath)) {
-      Files.createDirectories(uploadPath);
-    }
-
-    try (InputStream inputStream = file.getInputStream()) {
-      Path filePath = uploadPath.resolve(fileName);
-      Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-      video.setUser(authenticatedUser);
-      video.setTitle(title);
-      video.setDescription(description);
-      video.setFileUrl("/video/" +authenticatedUser.getId() +"/" +fileName);
-      video = videoRepository.save(video);
-    } catch (IOException exception) {
-      throw new IOException("No se pudo guardar el archivo: " + fileName);
-    }
+    video.setUser(authenticatedUser);
+    video.setTitle(request.getTitle());
+    video.setDescription(request.getDescription());
+    video.setFileUrl(fileMS.saveFile(file, authenticatedUser.getId(), FileManagerService.VIDEOS_PATH));
+    video = videoRepository.save(video);
 
     return video;
   }
 
+  public UrlResource getVideoResource(Integer id) throws MalformedURLException {
+    Optional<Video> videoFound = videoRepository.findById(id);
+    if (!videoFound.isPresent()) throw new NotFoundException("El video con id " + id + " no existe");
+    Video video = videoFound.get();
+    String ubicacion = video.getFileUrl();
+    return new UrlResource("file:" + ubicacion);
+  }
+
   @Transactional
-  public Video actualizarVideo(Integer id, VideoRequest request) throws NoSuchElementException{
+  public Video updateVideo(Integer id, VideoRequest request) throws NoSuchElementException {
     Video video = videoRepository.findById(id).get();
     video.setTitle(request.getTitle());
     video.setDescription(request.getDescription());
     videoRepository.save(video);
     return video;
   }
-  
+
   @Transactional
-  public void eliminarVideo(Integer id) throws NoSuchElementException{
+  public void deleteVideo(Integer id) throws NoSuchElementException {
     Video video = videoRepository.findById(id).get();
     videoRepository.delete(video);
   }
@@ -111,7 +110,8 @@ public class VideoService {
     return cuentaRepository.findById(userId).isPresent();
   }
 
-  /*private Boolean existProvider(Integer proveedorId) {
-    return proveedorRepository.findById(proveedorId).isPresent();
-  }*/
+  /*
+   * private Boolean existProvider(Integer proveedorId) { return
+   * proveedorRepository.findById(proveedorId).isPresent(); }
+   */
 }

@@ -26,6 +26,7 @@ import com.cloud.config.JwtTokenBlacklist;
 import com.cloud.model.User;
 import com.cloud.model.request.LoginRequest;
 import com.cloud.model.request.RegisterRequest;
+import com.cloud.service.utility.EmailService;
 
 @Service
 public class AuthService implements UserDetailsService{
