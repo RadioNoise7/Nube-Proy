@@ -105,14 +105,14 @@ public class VideoService {
       HttpRange httpRange = httpHeaders.getRange().size() != 0 ? httpHeaders.getRange().get(0) : null;
   
       if(httpRange == null)  {
-          long step = Math.min(KByte, videoLength); // los primero 1024 Bytes
-          return new ResourceRegion(urlResource, 0, step); // 0 + paso 
+          long step = Math.min(KByte, videoLength);
+          return new ResourceRegion(urlResource, 0, step);
       }
   
       long start = httpRange.getRangeStart(videoLength);
       long end = httpRange.getRangeEnd(videoLength);
-      long step = Math.min(MByte, end - start + 1); // limitar el maximo a 1 MB
-      return new ResourceRegion(urlResource, start, step); // inicio + paso
+      long step = Math.min(MByte, end - start + 1);
+      return new ResourceRegion(urlResource, start, step);
     }
 
   @Transactional

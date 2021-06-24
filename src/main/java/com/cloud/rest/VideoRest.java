@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,8 +79,8 @@ public class VideoRest {
       UrlResource video = videoService.getVideoResource(id);
 
       return ResponseEntity.status(HttpStatus.OK)
-              .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM)) // Content-Type:
-              .body(video);                                                                                 // application/video-mp4 default => application/octet-stream
+              .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM))
+              .body(video);
   }
 
   
@@ -93,8 +92,8 @@ public class VideoRest {
       ResourceRegion videoRegion = videoService.getVideoResourceInParts(videoResource, headers);
 
       return ResponseEntity.status(HttpStatus.OK)
-              .contentType(MediaTypeFactory.getMediaType(videoResource).orElse(MediaType.APPLICATION_OCTET_STREAM)) // Content-Type:
-              .body(videoRegion);                                                                                 // application/video-mp4 default => application/octet-stream
+              .contentType(MediaTypeFactory.getMediaType(videoResource).orElse(MediaType.APPLICATION_OCTET_STREAM))
+              .body(videoRegion);
   }
 
   @PutMapping("/videos/{videoId}")
