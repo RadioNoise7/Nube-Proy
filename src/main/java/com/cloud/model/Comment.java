@@ -1,6 +1,5 @@
 package com.cloud.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,9 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-@Table(name = "commentaries")
-public class Commentary {
+@Table(name = "comments")
+public class Comment {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +23,11 @@ public class Commentary {
     private User user;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "video_id")
     private Video video;
 
     private String content;
-
-    @Column(name="created_at")
-    private String creacion;
 
     public Integer getId() {
         return id;

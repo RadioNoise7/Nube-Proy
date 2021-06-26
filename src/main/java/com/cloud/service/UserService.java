@@ -40,12 +40,6 @@ public class UserService {
 
     private final Integer DEFAULT_PROVIDER_ID = 1;
     private final Integer DEFAULT_ROLE_USER_ID = 2;
-    
-    public List<User> getUsers() {
-        List<User> users = new LinkedList<>();
-        userRepository.findAll().iterator().forEachRemaining(users::add);
-        return users;
-    }
 
     public User getUserById(Integer id) {
         Optional<User> user = userRepository.findById(id);
@@ -59,6 +53,12 @@ public class UserService {
         if (!user.isPresent())
             throw new NotFoundException("No se encontró un usuario con username " +username);
         return user.get();
+    }
+    
+    public List<User> getUsers() {
+        List<User> users = new LinkedList<>();
+        userRepository.findAll().iterator().forEachRemaining(users::add);
+        return users;
     }
 
     @Transactional
@@ -91,6 +91,7 @@ public class UserService {
 
     }
 
+    @Transactional
     public void updateTokenAt(String username, Timestamp timeS){
         User user = getUserByUsername(username);
         user.setTokenAt(timeS);

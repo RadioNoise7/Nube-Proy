@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 24-06-2021 a las 20:02:33
+-- Tiempo de generación: 26-06-2021 a las 05:17:00
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 7.4.6
 
@@ -52,11 +52,11 @@ CREATE TABLE `blacklist_tokens` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `commentaries`
+-- Estructura de tabla para la tabla `comments`
 --
 
-DROP TABLE IF EXISTS `commentaries`;
-CREATE TABLE `commentaries` (
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `video_id` int(11) NOT NULL,
@@ -171,9 +171,9 @@ ALTER TABLE `blacklist_tokens`
   ADD UNIQUE KEY `token` (`token`);
 
 --
--- Indices de la tabla `commentaries`
+-- Indices de la tabla `comments`
 --
-ALTER TABLE `commentaries`
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK4w16kqj6nkij4kgohharsbmhq` (`user_id`),
   ADD KEY `FK307vrkda8qtp7l82uy27rtav8` (`video_id`);
@@ -218,12 +218,12 @@ ALTER TABLE `videos`
 -- AUTO_INCREMENT de la tabla `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `commentaries`
+-- AUTO_INCREMENT de la tabla `comments`
 --
-ALTER TABLE `commentaries`
+ALTER TABLE `comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -248,13 +248,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -268,9 +268,9 @@ ALTER TABLE `accounts`
   ADD CONSTRAINT `FKnjuop33mo69pd79ctplkck40n` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Filtros para la tabla `commentaries`
+-- Filtros para la tabla `comments`
 --
-ALTER TABLE `commentaries`
+ALTER TABLE `comments`
   ADD CONSTRAINT `FK307vrkda8qtp7l82uy27rtav8` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`),
   ADD CONSTRAINT `FK4w16kqj6nkij4kgohharsbmhq` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 

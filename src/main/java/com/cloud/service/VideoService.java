@@ -57,6 +57,12 @@ public class VideoService {
     return videoList;
   }
 
+  public Video getVideoById(Integer videoId) throws NotFoundException{
+    Optional<Video> video = videoRepository.findById(videoId);
+    if(!video.isPresent())
+      throw new NotFoundException("No se encontró el video con id "+videoId);
+    return video.get();
+  }
   /*
    * public List<Video> getVideosByProviderId(Integer providerId) { List<Video>
    * videos = new LinkedList<>();
