@@ -11,7 +11,7 @@ import com.cloud.model.Comment;
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, Integer> {
     
-    Optional<List<Comment>> findCommentsByUserId(Integer userId);
+    Optional<List<Comment>> findByUserId(Integer userId);
 
-    Optional<List<Comment>> findCommentsByVideoId(Integer videoId);
+    Optional<List<Comment>> findByVideoId(Integer videoId);
 }

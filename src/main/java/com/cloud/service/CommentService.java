@@ -44,7 +44,7 @@ public class CommentService {
     public Comment getCommentById(Integer id) throws NotFoundException {
         Optional<Comment> comment = commentRepository.findById(id);
         if(!comment.isPresent())
-            throw new NotFoundException("No se encontró el comentario con id "+comment.get());
+            throw new NotFoundException("No se encontró el comentario con id "+id);
         return comment.get();
     }
 
@@ -70,12 +70,12 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByAuthdUser(){
-        Optional<List<Comment>> comments = commentRepository.findCommentsByUserId(authService.getAuthUser().getId());
+        Optional<List<Comment>> comments = commentRepository.findByUserId(authService.getAuthUser().getId());
         return comments.get();
     }
 
     public List<Comment> getCommentsByVideo(Integer videoId){
-        Optional<List<Comment>> comments = commentRepository.findCommentsByVideoId(videoService.getVideoById(videoId).getId());
+        Optional<List<Comment>> comments = commentRepository.findByVideoId(videoService.getVideoById(videoId).getId());
         return comments.get();
     }
     
