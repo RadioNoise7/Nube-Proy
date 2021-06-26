@@ -48,7 +48,7 @@ public class CommentRest {
 
     @GetMapping("/comment/user")
     public ResponseEntity<List<Comment>> getCommentsByAuthUser() throws URISyntaxException{
-        List<Comment> comments = commentService.getCommentsByAuthdUser();
+        List<Comment> comments = commentService.getCommentsByAuthUser();
         return ResponseEntity.ok().body(comments);
     }
 
@@ -58,10 +58,10 @@ public class CommentRest {
         return ResponseEntity.ok().body(comments);
     }
 
-    @PostMapping("/comment/video/{videoId}")
-    public ResponseEntity<Comment> postComment(@Valid @RequestBody CommentRequest request, @PathVariable Integer videoId) throws URISyntaxException {
-        Comment comment = commentService.createComment(request, videoId);
-        return ResponseEntity.created(new URI("/videos/" +comment.getId())).body(comment);
+    @PostMapping("/comment/{commentId}")
+    public ResponseEntity<Comment> postComment(@Valid @RequestBody CommentRequest request, @PathVariable Integer commentId) throws URISyntaxException {
+        Comment comment = commentService.createComment(request, commentId);
+        return ResponseEntity.created(new URI("/comment/" +comment.getId())).body(comment);
     }
 
     @PutMapping("/comment/{commentId}")

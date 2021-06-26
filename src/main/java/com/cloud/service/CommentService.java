@@ -69,7 +69,7 @@ public class CommentService {
         commentRepository.delete(comment);
     }
 
-    public List<Comment> getCommentsByAuthdUser(){
+    public List<Comment> getCommentsByAuthUser(){
         Optional<List<Comment>> comments = commentRepository.findByUserId(authService.getAuthUser().getId());
         return comments.get();
     }
