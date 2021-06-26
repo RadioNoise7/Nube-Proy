@@ -19,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 //import com.javainuse.service.JwtUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -61,6 +62,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			System.out.println("Incapaz de obtener el Token JWT");
 		} catch (ExpiredJwtException e) {
 			System.out.println("El token JWT expiró");
+		} catch (MalformedJwtException e){
+			System.out.println("El token tiene un formato incorrecto");
 		}
 
 		// Once we get the token validate it.

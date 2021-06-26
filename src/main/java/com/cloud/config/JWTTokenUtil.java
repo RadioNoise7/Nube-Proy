@@ -12,14 +12,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JWTTokenUtil implements Serializable {
 
 	private static final long serialVersionUID = -2550185165626007488L;
 
-	private long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+	@Value("${jwt.token.duration}")
+	private int tokenDuration;
 
 	@Value("${jwt.secret}")
 	private String secret;
@@ -28,7 +31,7 @@ public class JWTTokenUtil implements Serializable {
 	@Autowired
 	private JwtTokenBlacklist tokenBlacklist;
 
-	public String getUsernameFromToken(String token) {
+	public String getUsernameFromToken(String token) throws MalformedJwtException {
 		return getClaimFromToken(token, Claims::getSubject);
 	}
 
@@ -41,7 +44,7 @@ public class JWTTokenUtil implements Serializable {
 		return claimsResolver.apply(claims);
 	}
 
-	private Claims getAllClaimsFromToken(String token) {
+	private Claims getAllClaimsFromToken(String token) throws UnsupportedJwtException {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 	}
 	
@@ -59,16 +62,13 @@ public class JWTTokenUtil implements Serializable {
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
 
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+				.setExpiration(new Date(System.currentTimeMillis() + tokenDuration * 60 * 60 * 1000))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 	
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
-		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token) && !isTokenOnBlacklist(token));
+		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token) && !tokenBlacklist.isTokenOnBlacklist(token));
 	}
 
-	public Boolean isTokenOnBlacklist(String token){
-		return tokenBlacklist.isTokenOnBlacklist(token);
-	}
 }
