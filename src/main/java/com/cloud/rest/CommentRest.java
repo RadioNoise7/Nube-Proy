@@ -58,9 +58,9 @@ public class CommentRest {
         return ResponseEntity.ok().body(comments);
     }
 
-    @PostMapping("/comment/{commentId}")
-    public ResponseEntity<Comment> postComment(@Valid @RequestBody CommentRequest request, @PathVariable Integer commentId) throws URISyntaxException {
-        Comment comment = commentService.createComment(request, commentId);
+    @PostMapping("/comment/video/{videoId}")
+    public ResponseEntity<Comment> postComment(@Valid @RequestBody CommentRequest request, @PathVariable Integer videoId) throws URISyntaxException {
+        Comment comment = commentService.createComment(request, videoId);
         return ResponseEntity.created(new URI("/comment/" +comment.getId())).body(comment);
     }
 
