@@ -46,7 +46,7 @@ public class CommentRest {
         return ResponseEntity.ok().body(comment);
     }
 
-    @GetMapping("/comment/user")
+    @GetMapping("/comment/me")
     public ResponseEntity<List<Comment>> getCommentsByAuthUser() throws URISyntaxException{
         List<Comment> comments = commentService.getCommentsByAuthUser();
         return ResponseEntity.ok().body(comments);
