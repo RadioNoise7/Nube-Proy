@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 26-06-2021 a las 05:17:00
+-- Tiempo de generación: 27-06-2021 a las 07:38:56
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 7.4.6
 
@@ -75,8 +75,7 @@ CREATE TABLE `interactions` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `video_id` int(11) NOT NULL,
-  `likes_count` int(11) DEFAULT NULL,
-  `dislikes_count` int(11) DEFAULT NULL
+  `like_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -182,7 +181,9 @@ ALTER TABLE `comments`
 -- Indices de la tabla `interactions`
 --
 ALTER TABLE `interactions`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK3en1u622jlvp97u4p5q93qyom` (`user_id`),
+  ADD KEY `FK172un02bdn92mdvma2mpr27k6` (`video_id`);
 
 --
 -- Indices de la tabla `providers`
@@ -218,19 +219,19 @@ ALTER TABLE `videos`
 -- AUTO_INCREMENT de la tabla `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `interactions`
 --
 ALTER TABLE `interactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `providers`
@@ -248,13 +249,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -273,6 +274,13 @@ ALTER TABLE `accounts`
 ALTER TABLE `comments`
   ADD CONSTRAINT `FK307vrkda8qtp7l82uy27rtav8` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`),
   ADD CONSTRAINT `FK4w16kqj6nkij4kgohharsbmhq` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Filtros para la tabla `interactions`
+--
+ALTER TABLE `interactions`
+  ADD CONSTRAINT `FK172un02bdn92mdvma2mpr27k6` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`),
+  ADD CONSTRAINT `FK3en1u622jlvp97u4p5q93qyom` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Filtros para la tabla `users`
