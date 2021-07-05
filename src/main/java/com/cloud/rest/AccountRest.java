@@ -1,7 +1,7 @@
 package com.cloud.rest;
 
-//import java.net.URI;
-//import java.net.URISyntaxException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,8 +52,8 @@ public class AccountRest {
     }
 
     // POST /api/cuentas
-    /*@PostMapping("/cuentas")
-    public ResponseEntity<Account> postCuentas(@RequestBody @Valid CuentaRequest request) throws URISyntaxException {
+    @PostMapping("/cuentas")
+    public ResponseEntity<Account> postCuentas(@RequestBody @Valid AccountRequest request) throws URISyntaxException {
 
         // RequestBody le indica a Java que estamos esperando un request que cumpla con los campos del Objeto CuentaRequest
 
@@ -62,7 +62,7 @@ public class AccountRest {
         // 201 Created
         // Header: Location
         return ResponseEntity.created(new URI("/cuentas/" + cuenta.getId())).body(cuenta);
-    }*/
+    }
 
     @PutMapping("/cuentas/{id}")
     public ResponseEntity<Account> actualizarCuenta(@RequestBody @Valid AccountRequest request,

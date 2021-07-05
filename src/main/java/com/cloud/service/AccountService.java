@@ -21,6 +21,9 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private AuthService authService;
+
     public List<Account> getCuentas() {
 
         List<Account> cuentas = new LinkedList<>();
@@ -71,6 +74,16 @@ public class AccountService {
         account.setUser(user);
         account.setProvider(provider);
         account.setAccountname(accountname);
+        accountRepository.save(account);
+        return account;
+    }
+
+    @Transactional
+    public Account crearCuenta(AccountRequest request){
+        Account account = new Account();
+        account.setUser(authService.getAuthUser());
+        account.setProvider(request.getProveedor());
+        account.setAccountname(request.getNombre());
         accountRepository.save(account);
         return account;
     }
