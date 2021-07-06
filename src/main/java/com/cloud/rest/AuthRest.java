@@ -28,8 +28,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.cloud.config.JWTTokenUtil;
 import com.cloud.config.JwtResponse;
 import com.cloud.exception.ValidationExceptionsHandler;
-import com.cloud.model.request.LoginRequest;
-import com.cloud.model.request.RegisterRequest;
+import com.cloud.model.Request.LoginRequest;
+import com.cloud.model.Request.RegisterRequest;
 import com.cloud.service.AuthService;
 import com.cloud.service.utility.EmailService;
 

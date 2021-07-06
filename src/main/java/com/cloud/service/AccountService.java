@@ -12,7 +12,7 @@ import com.cloud.exception.NotFoundException;
 import com.cloud.model.Account;
 import com.cloud.model.Provider;
 import com.cloud.model.User;
-import com.cloud.model.request.AccountRequest;
+import com.cloud.model.Request.AccountRequest;
 import com.cloud.repository.AccountRepository;
 
 @Service

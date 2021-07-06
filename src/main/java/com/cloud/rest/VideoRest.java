@@ -9,7 +9,7 @@ import java.util.Map;
 
 import com.cloud.exception.ValidationExceptionsHandler;
 import com.cloud.model.Video;
-import com.cloud.model.request.VideoRequest;
+import com.cloud.model.Request.VideoRequest;
 
 import com.cloud.service.VideoService;
 

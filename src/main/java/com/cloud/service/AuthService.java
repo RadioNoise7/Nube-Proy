@@ -25,8 +25,8 @@ import com.cloud.config.JWTTokenUtil;
 import com.cloud.config.JwtTokenBlacklist;
 import com.cloud.exception.CurrentlyLoggedInException;
 import com.cloud.model.User;
-import com.cloud.model.request.LoginRequest;
-import com.cloud.model.request.RegisterRequest;
+import com.cloud.model.Request.LoginRequest;
+import com.cloud.model.Request.RegisterRequest;
 import com.cloud.service.utility.EmailService;
 
 @Service

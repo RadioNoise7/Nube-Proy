@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cloud.exception.ValidationExceptionsHandler;
 import com.cloud.model.Comment;
-import com.cloud.model.request.CommentRequest;
+import com.cloud.model.Request.CommentRequest;
 import com.cloud.service.CommentService;
 
 @RestController

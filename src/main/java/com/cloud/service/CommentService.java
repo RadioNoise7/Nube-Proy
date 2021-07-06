@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cloud.exception.NotFoundException;
 import com.cloud.model.Comment;
-import com.cloud.model.request.CommentRequest;
+import com.cloud.model.Request.CommentRequest;
 import com.cloud.repository.CommentRepository;
 
 @Service

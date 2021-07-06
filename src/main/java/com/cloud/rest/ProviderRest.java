@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.cloud.exception.ValidationExceptionsHandler;
 import com.cloud.model.Provider;
-import com.cloud.model.request.ProviderRequest;
+import com.cloud.model.Request.ProviderRequest;
 import com.cloud.service.ProviderService;
 
 @RestController // Metaprogramacion

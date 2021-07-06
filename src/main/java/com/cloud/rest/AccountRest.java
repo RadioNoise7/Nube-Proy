@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cloud.exception.ValidationExceptionsHandler;
 import com.cloud.model.Account;
-import com.cloud.model.request.AccountRequest;
+import com.cloud.model.Request.AccountRequest;
 import com.cloud.service.AccountService;
 
 @RestController // Metaprogramacion

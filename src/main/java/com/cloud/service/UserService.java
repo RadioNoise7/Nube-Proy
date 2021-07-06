@@ -16,7 +16,7 @@ import com.cloud.exception.ConflictException;
 import com.cloud.exception.NotFoundException;
 import com.cloud.model.Role;
 import com.cloud.model.User;
-import com.cloud.model.request.RegisterRequest;
+import com.cloud.model.Request.RegisterRequest;
 import com.cloud.repository.RoleRepository;
 import com.cloud.repository.UserRepository;
 

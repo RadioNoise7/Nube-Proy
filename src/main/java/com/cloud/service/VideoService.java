@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import com.cloud.exception.NotFoundException;
 import com.cloud.model.User;
 import com.cloud.model.Video;
-import com.cloud.model.request.VideoRequest;
+import com.cloud.model.Request.VideoRequest;
 import com.cloud.repository.AccountRepository;
 import com.cloud.repository.VideoRepository;
 import com.cloud.service.utility.FileManagerService;

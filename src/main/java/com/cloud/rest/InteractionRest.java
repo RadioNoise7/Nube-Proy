@@ -8,7 +8,7 @@ import javax.validation.Valid;
 
 import com.cloud.exception.ValidationExceptionsHandler;
 import com.cloud.model.Interaction;
-import com.cloud.model.request.InteractionRequest;
+import com.cloud.model.Request.InteractionRequest;
 import com.cloud.service.AuthService;
 import com.cloud.service.InteractionService;
 
